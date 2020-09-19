@@ -7,10 +7,14 @@ public class Map : MonoBehaviour
     private Tilemap tilemap;
     private TileResources tileResources;
 
+    private int gold = 0;
+    private UnityEngine.UI.Text goldText;
+
     void Start()
     {
         tilemap = GetComponentInChildren<Tilemap>();
         tileResources = GetComponentInChildren<TileResources>();
+        goldText = GameObject.FindGameObjectWithTag("UI").GetComponent<UnityEngine.UI.Text>();
 
         LoadLevel(GameManager.Instance.Level);
     }
@@ -23,5 +27,11 @@ public class Map : MonoBehaviour
         }
     
         tilemap.RefreshAllTiles();
+    }
+
+    private void FixedUpdate()
+    {
+        gold++;
+        goldText.text = $"Gold: {gold}";
     }
 }
