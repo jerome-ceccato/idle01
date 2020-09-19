@@ -1,32 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
     private Tilemap tilemap;
-    private TileFactory tileFactory;
+    private TileResources tileResources;
 
     void Start()
     {
         tilemap = GetComponentInChildren<Tilemap>();
-        tileFactory = GetComponentInChildren<TileFactory>();
+        tileResources = GetComponentInChildren<TileResources>();
 
-        LoadLevel(new Vector2Int(3, 3));
+        LoadLevel(GameManager.Instance.Level);
     }
 
-    private void LoadLevel(Vector2Int size)
+    private void LoadLevel(Dictionary<Vector2Int, Terrain> level)
     {
-        for (int x = 0; x < size.x; x++)
+        foreach (var item in level)
         {
-            for (int y = 0; y < size.y; y++)
-            {
-                Tile tile = Random.Range(0, 2) == 0 ? tileFactory.grass : tileFactory.grassWithStones;
-                tilemap.SetTile(new Vector3Int(x, y, 0), tile);
-            }
+            tilemap.SetTile(item.Key.To3D(), tileResources.TileForTerrain(item.Value));
         }
-
+    
         tilemap.RefreshAllTiles();
     }
 }
