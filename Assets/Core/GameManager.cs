@@ -27,7 +27,16 @@ public sealed class GameManager
             }
         }
     }
-    public void Tick() { }
+
+    private int ticks = 0;
+    public void Tick() 
+    {
+        ticks++;
+    }
+    public string GetDebugState()
+    {
+        return $"ticks: {ticks}";
+    }
 
     // Singleton boilerplate
 

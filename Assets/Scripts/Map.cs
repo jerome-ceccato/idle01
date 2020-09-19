@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
@@ -7,14 +8,13 @@ public class Map : MonoBehaviour
     private Tilemap tilemap;
     private TileResources tileResources;
 
-    private int gold = 0;
-    private UnityEngine.UI.Text goldText;
+    private Text textField;
 
     void Start()
     {
         tilemap = GetComponentInChildren<Tilemap>();
         tileResources = GetComponentInChildren<TileResources>();
-        goldText = GameObject.FindGameObjectWithTag("UI").GetComponent<UnityEngine.UI.Text>();
+        textField = GameObject.Find("Text field").GetComponent<Text>();
 
         LoadLevel(GameManager.Instance.Level);
     }
@@ -31,7 +31,6 @@ public class Map : MonoBehaviour
 
     private void FixedUpdate()
     {
-        gold++;
-        goldText.text = $"Gold: {gold}";
+        textField.text = GameManager.Instance.GetDebugState();
     }
 }
