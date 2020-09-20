@@ -6,4 +6,9 @@ public static class TypeExtensions
     {
         return new Vector3Int(v.x, v.y, 0);
     }
+
+    public static Vector2Int To2D(this Vector3Int v)
+    {
+        return new Vector2Int(v.x, v.y);
+    }
 }

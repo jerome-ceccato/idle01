@@ -16,6 +16,7 @@ public sealed class GameManager
     {
         LoadLevel();
     }
+
     private void LoadLevel()
     {
         for (int x = 0; x < 3; x++)
