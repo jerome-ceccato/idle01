@@ -5,30 +5,19 @@ using UnityEngine.Tilemaps;
 
 public class MouseTileOverlay : MonoBehaviour
 {
-    private Tilemap tilemap;
+    public Tilemap tilemap;
     private SpriteRenderer spriteRenderer;
+    private MouseHelper mouseHelper;
 
     void Start()
     {
-        tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private Vector3Int TileCoordinateForCurrentMousePosition()
-    {
-        Vector3 rawPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 fixedPosition = new Vector3(rawPosition.x, rawPosition.y, 0);
-
-        return tilemap.WorldToCell(fixedPosition);
+        mouseHelper = GetComponent<MouseHelper>();
     }
 
     void Update()
     {
-        Vector3Int tileCoordinate = TileCoordinateForCurrentMousePosition();
-
-        Vector3 localCoordinate = tilemap.CellToLocal(tileCoordinate);
-        transform.position = localCoordinate;
-
-        spriteRenderer.enabled = GameManager.Instance.Level.ContainsKey(tileCoordinate.To2D());
+        transform.position = mouseHelper.LocalCoordinateForTileWithCurrentMousePosition();
+        spriteRenderer.enabled = mouseHelper.TileCoordinateForCurrentMousePosition() != null;
     }
 }

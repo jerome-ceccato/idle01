@@ -5,16 +5,18 @@ using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
-    private Tilemap tilemap;
+    public Tilemap terrainTilemap;
+    public Tilemap buildingsTilemap;
+    
     private TileResources tileResources;
-
     private Text textField;
+    private MouseHelper mouseHelper;
 
     void Start()
     {
-        tilemap = GetComponentInChildren<Tilemap>();
-        tileResources = GetComponentInChildren<TileResources>();
+        tileResources = GetComponent<TileResources>();
         textField = GameObject.Find("Text field").GetComponent<Text>();
+        mouseHelper = GetComponent<MouseHelper>();
 
         LoadLevel(GameManager.Instance.Level);
     }
@@ -23,14 +25,22 @@ public class Map : MonoBehaviour
     {
         foreach (var item in level)
         {
-            tilemap.SetTile(item.Key.To3D(), tileResources.TileForTerrain(item.Value));
+            terrainTilemap.SetTile(item.Key.To3D(), tileResources.TileForTerrain(item.Value));
         }
     
-        tilemap.RefreshAllTiles();
+        terrainTilemap.RefreshAllTiles();
+
+        buildingsTilemap.SetTile(new Vector3Int(2, 0, 0), tileResources.wheat);
+        buildingsTilemap.RefreshAllTiles();
     }
 
-    private void FixedUpdate()
+    void Update()
     {
-        textField.text = GameManager.Instance.GetDebugState();
+        string content = "";
+        Vector2Int? hoveredTile = mouseHelper.TileCoordinateForCurrentMousePosition();
+
+        content += hoveredTile != null ? $"Hover: {hoveredTile}\n" : "No hover\n";
+        content += GameManager.Instance.GetDebugState();
+        textField.text = content;
     }
 }

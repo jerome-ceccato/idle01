@@ -3,8 +3,13 @@ using UnityEngine.Tilemaps;
 
 public class TileResources: MonoBehaviour
 {
+    // terrain
     public Tile grass;
     public Tile grassWithStones;
+
+    // buildings
+    public Tile wheat;
+
 
     public Tile TileForTerrain(Terrain t)
     {
