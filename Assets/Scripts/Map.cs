@@ -21,21 +21,44 @@ public class Map : MonoBehaviour
         LoadLevel(GameManager.Instance.Level);
     }
 
-    private void LoadLevel(Dictionary<Vector2Int, Terrain> level)
+    private void LoadLevel(Dictionary<Vector2Int, TileContainer> level)
     {
         foreach (var item in level)
         {
-            terrainTilemap.SetTile(item.Key.To3D(), tileResources.TileForTerrain(item.Value));
+            Vector3Int position = item.Key.To3D();
+            TileContainer tile = item.Value;
+
+            terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain));
         }
     
         terrainTilemap.RefreshAllTiles();
+        UpdateBuildings(level);
+    }
 
-        buildingsTilemap.SetTile(new Vector3Int(2, 0, 0), tileResources.wheat);
+    private void UpdateBuildings(Dictionary<Vector2Int, TileContainer> level)
+    {
+        foreach (var item in level)
+        {
+            Vector3Int position = item.Key.To3D();
+            TileContainer tile = item.Value;
+
+            if (tile.building != null)
+            {
+                buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building));
+            }
+            else if (tile.terrain.tileResource != null)
+            {
+                buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain.tileResource));
+            }
+        }
+
         buildingsTilemap.RefreshAllTiles();
     }
 
     void Update()
     {
+        UpdateBuildings(GameManager.Instance.Level);
+
         string content = "";
         Vector2Int? hoveredTile = mouseHelper.TileCoordinateForCurrentMousePosition();
 

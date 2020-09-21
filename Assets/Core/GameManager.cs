@@ -3,28 +3,31 @@ using UnityEngine;
 
 public sealed class GameManager
 {
-    public Dictionary<Vector2Int, Terrain> Level;
+    public Dictionary<Vector2Int, TileContainer> Level;
 
     // Lifecycle
 
     private GameManager()
     {
-        Level = new Dictionary<Vector2Int, Terrain>();
+        Level = new Dictionary<Vector2Int, TileContainer>();
     }
 
     public void Start() 
     {
-        LoadLevel();
+        LoadInitialLevel();
     }
 
-    private void LoadLevel()
+    private void LoadInitialLevel()
     {
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
-                Terrain type = x == y && x == 1 ? Terrain.GrassWithStones : Terrain.Grass;
-                Level.Add(new Vector2Int(x, y), type);
+                Terrain terrain = TerrainFactory.grassField();
+                Building building = null;
+                TileContainer tileContainer = new TileContainer(terrain, building);
+                
+                Level.Add(new Vector2Int(x, y), tileContainer);
             }
         }
     }
@@ -33,7 +36,12 @@ public sealed class GameManager
     public void Tick() 
     {
         ticks++;
+        foreach (TileContainer container in Level.Values)
+        {
+            container.Tick();
+        }
     }
+
     public string GetDebugState()
     {
         return $"ticks: {ticks}";

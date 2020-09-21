@@ -252,8 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b2c97a6892e408c9c167b2ac7f89ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grass: {fileID: 11400000, guid: 868c84f60afa64f71a0a7d52063974ce, type: 2}
-  grassWithStones: {fileID: 11400000, guid: 849f13c4eafdd4e4c805ec341230be08, type: 2}
+  grassField: {fileID: 11400000, guid: 868c84f60afa64f71a0a7d52063974ce, type: 2}
   wheat: {fileID: 11400000, guid: a61704b95264d403aa9398d539748cb0, type: 2}
 --- !u!1 &519420028
 GameObject:

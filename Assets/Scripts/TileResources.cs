@@ -4,23 +4,14 @@ using UnityEngine.Tilemaps;
 public class TileResources: MonoBehaviour
 {
     // terrain
-    public Tile grass;
-    public Tile grassWithStones;
+    public Tile grassField;
 
     // buildings
     public Tile wheat;
 
 
-    public Tile TileForTerrain(Terrain t)
+    public Tile TileForEntity(Entity e)
     {
-        switch (t)
-        {
-            case Terrain.Grass:
-                return grass;
-            case Terrain.GrassWithStones:
-                return grassWithStones;
-            default:
-                return null;
-        }
+        return (Tile)GetType().GetField(e.Id).GetValue(this);
     }
 }
