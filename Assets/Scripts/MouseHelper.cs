@@ -16,15 +16,18 @@ public class MouseHelper : MonoBehaviour
         return tilemap.CellToLocal(cellPosition);
     }
 
-
-    public Vector2Int? TileCoordinateForCurrentMousePosition()
+    public Vector2Int TileCoordinateForCurrentMousePosition()
     {
         Vector3 rawPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 fixedPosition = new Vector3(rawPosition.x, rawPosition.y, 0);
 
         Vector3Int coord = tilemap.WorldToCell(fixedPosition);
-        Vector2Int coord2D = coord.To2D();
+        return coord.To2D();
+    }
 
-        return GameManager.Instance.Level.ContainsKey(coord2D) ? (Vector2Int?)coord2D : null;
+    public TileContainer TileContainerForCurrentMousePosition()
+    {
+        Vector2Int position = TileCoordinateForCurrentMousePosition();
+        return GameManager.Instance.Level.ContainsKey(position) ? GameManager.Instance.Level[position] : null;
     }
 }

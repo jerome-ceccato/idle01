@@ -1,7 +1,13 @@
 ﻿using System;
-public class TileResource: Entity
+
+public sealed class TileResource: Entity
 {
-    public TileResource(string id) : base(id)
+    public Resource resource;
+    public int amount;
+
+    public TileResource(string id, Resource resource, int amount) : base(id)
     {
+        this.resource = resource;
+        this.amount = amount;
     }
 }

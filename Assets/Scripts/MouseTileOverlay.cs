@@ -18,6 +18,6 @@ public class MouseTileOverlay : MonoBehaviour
     void Update()
     {
         transform.position = mouseHelper.LocalCoordinateForTileWithCurrentMousePosition();
-        spriteRenderer.enabled = mouseHelper.TileCoordinateForCurrentMousePosition() != null;
+        spriteRenderer.enabled = mouseHelper.TileContainerForCurrentMousePosition() != null;
     }
 }

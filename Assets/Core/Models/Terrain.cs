@@ -10,4 +10,5 @@ public class Terrain : Entity
     }
 
     public virtual void Tick() { }
+    public virtual void AquireResource() { }
 }

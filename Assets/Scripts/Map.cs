@@ -37,6 +37,7 @@ public class Map : MonoBehaviour
 
     private void UpdateBuildings(Dictionary<Vector2Int, TileContainer> level)
     {
+        buildingsTilemap.ClearAllTiles();
         foreach (var item in level)
         {
             Vector3Int position = item.Key.To3D();
@@ -51,7 +52,6 @@ public class Map : MonoBehaviour
                 buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain.tileResource));
             }
         }
-
         buildingsTilemap.RefreshAllTiles();
     }
 

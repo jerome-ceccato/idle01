@@ -21,4 +21,13 @@ public class TerrainField : Terrain
             }
         }
     }
+
+    public override void AquireResource()
+    {
+        if (tileResource != null)
+        {
+            GameManager.Instance.AddResource(tileResource.resource, tileResource.amount);
+            tileResource = null;
+        }
+    }
 }

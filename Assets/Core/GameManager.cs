@@ -10,6 +10,7 @@ public sealed class GameManager
     private GameManager()
     {
         Level = new Dictionary<Vector2Int, TileContainer>();
+        state = new Dictionary<Resource, int>();
     }
 
     public void Start() 
@@ -32,6 +33,17 @@ public sealed class GameManager
         }
     }
 
+    // Move to state class
+    private Dictionary<Resource, int> state;
+    public void AddResource(Resource r, int amount)
+    {
+        if (!state.ContainsKey(r))
+        {
+            state.Add(r, 0);
+        }
+        state[r] += amount;
+    }
+
     private int ticks = 0;
     public void Tick() 
     {
@@ -44,7 +56,12 @@ public sealed class GameManager
 
     public string GetDebugState()
     {
-        return $"ticks: {ticks}";
+        string content = $"ticks: {ticks}\n";
+        foreach (var item in state)
+        {
+            content += $"{item.Key.Id}: {item.Value}\n";
+        }
+        return content;
     }
 
     // Singleton boilerplate

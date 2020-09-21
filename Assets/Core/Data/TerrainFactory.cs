@@ -4,6 +4,7 @@ public class TerrainFactory
 {
     public static Terrain grassField()
     {
-        return new TerrainField("grassField", 100, new TileResource("wheat"));
+        return new TerrainField("grassField", 100,
+            new TileResource("wheat", Resources.food, 1));
     }
 }
