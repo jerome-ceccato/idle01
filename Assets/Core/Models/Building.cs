@@ -5,4 +5,6 @@ public class Building : Entity
     {
         
     }
+
+    public virtual void Tick() { }
 }

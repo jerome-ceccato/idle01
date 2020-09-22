@@ -254,7 +254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grassField: {fileID: 11400000, guid: 868c84f60afa64f71a0a7d52063974ce, type: 2}
-  wheat: {fileID: 11400000, guid: a61704b95264d403aa9398d539748cb0, type: 2}
+  plant1: {fileID: 11400000, guid: f5f0b1f3070b749a7b5975d75d69c5d9, type: 2}
+  plant2: {fileID: 11400000, guid: 6e8de920735904d32abf64b485b9297b, type: 2}
 --- !u!114 &487902314
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,9 @@ public sealed class TileContainer
 
     public void Tick()
     {
-        terrain.Tick();
+        if (terrain is GrowableTerrain)
+        {
+            ((GrowableTerrain)terrain).Tick();
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 public abstract class Entity
 {
-    public readonly string Id;
+    public string Id { get; private set; }
 
     protected Entity(string id)
     {

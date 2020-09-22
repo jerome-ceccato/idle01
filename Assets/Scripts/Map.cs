@@ -47,9 +47,14 @@ public class Map : MonoBehaviour
             {
                 buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building));
             }
-            else if (tile.terrain.tileResource != null)
+            else if (tile.terrain is GrowableTerrain)
             {
-                buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain.tileResource));
+                GrowableTerrain terrain = (GrowableTerrain)tile.terrain;
+                if (terrain.DisplayEntity?.Id != null)
+                {
+                    buildingsTilemap.SetTile(position, tileResources.TileForEntity(terrain.DisplayEntity));
+                }
+                
             }
         }
         buildingsTilemap.RefreshAllTiles();

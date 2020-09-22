@@ -17,7 +17,10 @@ public class MouseClickHandler : MonoBehaviour
             TileContainer tileContainer = mouseHelper.TileContainerForCurrentMousePosition();
             if (tileContainer != null)
             {
-                tileContainer.terrain.AquireResource();
+                if (tileContainer.terrain is GrowableTerrain)
+                {
+                    ((GrowableTerrain)tileContainer.terrain).AquireResource();
+                }
             }
         }
     }

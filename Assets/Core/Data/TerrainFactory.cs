@@ -1,10 +1,16 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 public class TerrainFactory
 {
-    public static Terrain grassField()
+    public static GrowableTerrain grassField()
     {
-        return new TerrainField("grassField", 100,
-            new TileResource("wheat", Resources.food, 1));
+        return new GrowableTerrain("grassField",
+            new GrowingResource(new List<GrowingResource.GrowthStage>()
+            {
+                new GrowingResource.GrowthStage("plant1", 100, 80),
+                new GrowingResource.GrowthStage("plant2", 40, 10),
+                
+            },
+            new GrowingResource.TileResource(Resources.food, 1)));
     }
 }
