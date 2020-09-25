@@ -63,7 +63,10 @@ public class Map : MonoBehaviour
     void Update()
     {
         UpdateBuildings(GameManager.Instance.Level);
+    }
 
+    void OnGUI()
+    {
         string content = "";
         Vector2Int? hoveredTile = mouseHelper.TileCoordinateForCurrentMousePosition();
 
