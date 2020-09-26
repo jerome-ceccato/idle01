@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
@@ -9,14 +8,10 @@ public class Map : MonoBehaviour
     public Tilemap buildingsTilemap;
     
     private TileResources tileResources;
-    private Text textField;
-    private MouseHelper mouseHelper;
-
+    
     void Start()
     {
         tileResources = GetComponent<TileResources>();
-        textField = GameObject.Find("Text field").GetComponent<Text>();
-        mouseHelper = GetComponent<MouseHelper>();
 
         LoadLevel(GameManager.Instance.Level);
     }
@@ -63,15 +58,5 @@ public class Map : MonoBehaviour
     void Update()
     {
         UpdateBuildings(GameManager.Instance.Level);
-    }
-
-    void OnGUI()
-    {
-        string content = "";
-        Vector2Int? hoveredTile = mouseHelper.TileCoordinateForCurrentMousePosition();
-
-        content += hoveredTile != null ? $"Hover: {hoveredTile}\n" : "No hover\n";
-        content += GameManager.Instance.GetDebugState();
-        textField.text = content;
     }
 }

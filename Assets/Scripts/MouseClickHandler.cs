@@ -19,7 +19,7 @@ public class MouseClickHandler : MonoBehaviour
             {
                 if (tileContainer.terrain is GrowableTerrain)
                 {
-                    ((GrowableTerrain)tileContainer.terrain).AquireResource();
+                    ((GrowableTerrain)tileContainer.terrain).CollectResource();
                 }
             }
         }

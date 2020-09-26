@@ -77,7 +77,7 @@ public class GrowingResource
         }
     }
 
-    public void AquireResource()
+    public void CollectResource()
     {
         if (done)
         {

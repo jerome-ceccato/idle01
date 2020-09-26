@@ -23,7 +23,7 @@ public class DragCamera : MonoBehaviour
         if (dragging)
         {
             Vector3 currentPosition = Input.mousePosition;
-            Vector3 translation = Camera.main.ScreenToViewportPoint(currentPosition - previousMousePosition) * -speed;
+            Vector3 translation = Camera.main.ScreenToViewportPoint(previousMousePosition - currentPosition) * speed;
             transform.Translate(translation);
 
             previousMousePosition = currentPosition;

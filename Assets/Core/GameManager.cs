@@ -3,6 +3,7 @@ using UnityEngine;
 
 public sealed class GameManager
 {
+    public GameState state;
     public Dictionary<Vector2Int, TileContainer> Level;
 
     // Lifecycle
@@ -10,7 +11,7 @@ public sealed class GameManager
     private GameManager()
     {
         Level = new Dictionary<Vector2Int, TileContainer>();
-        state = new Dictionary<Resource, int>();
+        state = new GameState();
     }
 
     public void Start() 
@@ -20,9 +21,9 @@ public sealed class GameManager
 
     private void LoadInitialLevel()
     {
-        for (int x = 0; x < 3; x++)
+        for (int x = 0; x < 1; x++)
         {
-            for (int y = 0; y < 3; y++)
+            for (int y = 0; y < 1; y++)
             {
                 Terrain terrain = TerrainFactory.grassField();
                 Building building = null;
@@ -33,35 +34,21 @@ public sealed class GameManager
         }
     }
 
-    // Move to state class
-    private Dictionary<Resource, int> state;
     public void AddResource(Resource r, int amount)
     {
-        if (!state.ContainsKey(r))
+        if (!state.resources.ContainsKey(r))
         {
-            state.Add(r, 0);
+            state.resources.Add(r, 0);
         }
-        state[r] += amount;
+        state.resources[r] += amount;
     }
 
-    private int ticks = 0;
     public void Tick() 
     {
-        ticks++;
         foreach (TileContainer container in Level.Values)
         {
             container.Tick();
         }
-    }
-
-    public string GetDebugState()
-    {
-        string content = $"ticks: {ticks}\n";
-        foreach (var item in state)
-        {
-            content += $"{item.Key.Id}: {item.Value}\n";
-        }
-        return content;
     }
 
     // Singleton boilerplate

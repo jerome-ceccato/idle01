@@ -14,9 +14,9 @@ public class GrowableTerrain : Terrain
         growingResource.Tick();
     }
 
-    public void AquireResource()
+    public void CollectResource()
     {
-        growingResource.AquireResource();
+        growingResource.CollectResource();
     }
 
     public Entity DisplayEntity
