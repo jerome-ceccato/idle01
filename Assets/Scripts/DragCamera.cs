@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class DragCamera : MonoBehaviour
 {
-    public float speed = 4.0f;
+    private int convertionRate = 280;
     private bool dragging;
     private Vector3 previousMousePosition;
 
     void OnGUI()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             dragging = true;
             previousMousePosition = Input.mousePosition;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(1))
         {
             dragging = false;
         }
@@ -23,9 +23,7 @@ public class DragCamera : MonoBehaviour
         if (dragging)
         {
             Vector3 currentPosition = Input.mousePosition;
-            Vector3 translation = Camera.main.ScreenToViewportPoint(previousMousePosition - currentPosition) * speed;
-            transform.Translate(translation);
-
+            transform.Translate((previousMousePosition - currentPosition) / convertionRate);
             previousMousePosition = currentPosition;
         }
     }

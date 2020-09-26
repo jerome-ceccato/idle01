@@ -9,9 +9,5 @@ public sealed class GameState
     public GameState()
     {
         resources = new Dictionary<Resource, int>();
-
-        resources.Add(Resources.food, 0);
-        resources.Add(Resources.stone, 0);
-        resources.Add(Resources.power, 0);
     }
 }
