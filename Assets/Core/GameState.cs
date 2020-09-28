@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public sealed class GameState
 {
-    public Dictionary<Resource, int> resources;
+    public Dictionary<Resource, BigInteger> resources;
 
     public GameState()
     {
-        resources = new Dictionary<Resource, int>();
+        resources = new Dictionary<Resource, BigInteger>();
     }
 }
