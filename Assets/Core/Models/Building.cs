@@ -1,9 +1,10 @@
 ﻿using System;
-public class Building : Entity
+public class Building
 {
-    public Building(string id) : base(id)
+    public readonly BuildingEntity entity;
+    public Building(BuildingEntity entity)
     {
-        
+        this.entity = entity;
     }
 
     public virtual void Tick() { }

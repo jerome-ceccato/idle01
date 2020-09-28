@@ -5,25 +5,27 @@ public class GrowingResource
 {
     public sealed class TileResource
     {
-        public Resource resource;
+        public ResourceEntity resource;
         public int amount;
 
-        public TileResource(Resource resource, int amount)
+        public TileResource(ResourceEntity resource, int amount)
         {
             this.resource = resource;
             this.amount = amount;
         }
     }
 
-    public sealed class GrowthStage : Entity
+    public sealed class GrowthStage
     {
+        public readonly GrowableEntity entity;
         // The number of ticks it takes to grow
         public int growthTicks;
         // A random variance to apply
         public int growthVariance;
 
-        public GrowthStage(string id, int ticks, int variance) : base("Growable/" + id)
+        public GrowthStage(GrowableEntity entity, int ticks, int variance) 
         {
+            this.entity = entity;
             growthTicks = ticks;
             growthVariance = variance;
         }
@@ -45,11 +47,11 @@ public class GrowingResource
         done = false;
     }
 
-    public Entity DisplayEntity
+    public GrowableEntity CurrentlyGrowingEntity
     {
         get
         {
-            return currentStage > 0 ? stages[currentStage - 1] : null;
+            return currentStage > 0 ? stages[currentStage - 1].entity : null;
         }
     }
 

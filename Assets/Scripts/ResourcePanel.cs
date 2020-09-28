@@ -12,13 +12,13 @@ public class ResourcePanel : MonoBehaviour
     void OnGUI()
     {
         GameState state = GameManager.Instance.state;
-        List<Resource> resources = new List<Resource>(state.resources.Keys);
+        List<ResourceEntity> resources = new List<ResourceEntity>(state.resources.Keys);
 
         createEntries(resources.Count);
         for (int i = 0; i < resources.Count; i++)
         {
             GameObject entry = existingEntries[i];
-            Resource resource = resources[i];
+            ResourceEntity resource = resources[i];
             BigInteger amount = state.resources[resource];
             Text textField = entry.GetComponentInChildren<Text>();
 

@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class Map : MonoBehaviour
 {
     public Tilemap terrainTilemap;
+    public Tilemap growableTilemap;
     public Tilemap buildingsTilemap;
     
     private TileResources tileResources;
@@ -23,7 +24,7 @@ public class Map : MonoBehaviour
             Vector3Int position = item.Key.To3D();
             TileContainer tile = item.Value;
 
-            terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain));
+            terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain.entity));
         }
     
         terrainTilemap.RefreshAllTiles();
@@ -32,26 +33,29 @@ public class Map : MonoBehaviour
 
     private void UpdateBuildings(Dictionary<Vector2Int, TileContainer> level)
     {
+        growableTilemap.ClearAllTiles();
         buildingsTilemap.ClearAllTiles();
         foreach (var item in level)
         {
             Vector3Int position = item.Key.To3D();
             TileContainer tile = item.Value;
 
-            if (tile.building != null)
-            {
-                buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building));
-            }
-            else if (tile.terrain is GrowableTerrain)
+            if (tile.terrain is GrowableTerrain)
             {
                 GrowableTerrain terrain = (GrowableTerrain)tile.terrain;
-                if (terrain.DisplayEntity?.Id != null)
+                if (terrain.CurrentlyGrowingEntity?.Id != null)
                 {
-                    buildingsTilemap.SetTile(position, tileResources.TileForEntity(terrain.DisplayEntity));
+                    growableTilemap.SetTile(position, tileResources.TileForEntity(terrain.CurrentlyGrowingEntity));
                 }
-                
+
+            }
+
+            if (tile.building != null)
+            {
+                buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building.entity));
             }
         }
+        growableTilemap.RefreshAllTiles();
         buildingsTilemap.RefreshAllTiles();
     }
 

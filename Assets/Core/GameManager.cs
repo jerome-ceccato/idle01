@@ -34,7 +34,7 @@ public sealed class GameManager
         }
     }
 
-    public void AddResource(Resource r, int amount)
+    public void AddResource(ResourceEntity r, int amount)
     {
         if (!state.resources.ContainsKey(r))
         {

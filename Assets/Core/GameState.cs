@@ -5,10 +5,10 @@ using UnityEngine;
 
 public sealed class GameState
 {
-    public Dictionary<Resource, BigInteger> resources;
+    public Dictionary<ResourceEntity, BigInteger> resources;
 
     public GameState()
     {
-        resources = new Dictionary<Resource, BigInteger>();
+        resources = new Dictionary<ResourceEntity, BigInteger>();
     }
 }

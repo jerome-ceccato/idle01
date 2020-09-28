@@ -4,7 +4,7 @@ public class GrowableTerrain : Terrain
 {
     private GrowingResource growingResource; 
 
-    public GrowableTerrain(string id, GrowingResource resource) : base(id)
+    public GrowableTerrain(TerrainEntity entity, GrowingResource resource) : base(entity)
     {
         growingResource = resource;
     }
@@ -19,11 +19,11 @@ public class GrowableTerrain : Terrain
         growingResource.CollectResource();
     }
 
-    public Entity DisplayEntity
+    public GrowableEntity CurrentlyGrowingEntity
     {
         get
         {
-            return growingResource.DisplayEntity;
+            return growingResource.CurrentlyGrowingEntity;
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
-public class Terrain : Entity
+public class Terrain
 {
-    public Terrain(string id) : base("Terrain/" + id)
+    public readonly TerrainEntity entity;
+    public Terrain(TerrainEntity entity)
     {
+        this.entity = entity;
     }
 
     public virtual void Tick() { }
