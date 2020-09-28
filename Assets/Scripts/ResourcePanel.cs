@@ -7,12 +7,7 @@ public class ResourcePanel : MonoBehaviour
 {
     public GameObject entryPrefab;
 
-    private List<GameObject> existingEntries;
-
-    private void Start()
-    {
-        existingEntries = new List<GameObject>();
-    }
+    private List<GameObject> existingEntries = new List<GameObject>();
 
     void OnGUI()
     {

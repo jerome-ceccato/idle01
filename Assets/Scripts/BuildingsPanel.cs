@@ -7,12 +7,11 @@ public class BuildingsPanel : MonoBehaviour
     public GameObject entryPrefab;
     private Rect entryRect;
 
-    private List<GameObject> existingEntries;
+    private List<GameObject> existingEntries = new List<GameObject>();
 
     private void Start()
     {
         entryRect = ((RectTransform)entryPrefab.transform).rect;
-        existingEntries = new List<GameObject>();
     }
 
     void OnGUI()
