@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Numerics;
 
 public class ResourcePanel : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class ResourcePanel : MonoBehaviour
         {
             GameObject entry = existingEntries[i];
             Resource resource = resources[i];
-            int amount = state.resources[resource];
+            BigInteger amount = state.resources[resource];
             Text textField = entry.GetComponentInChildren<Text>();
 
             textField.text = $"{resource.Id}: {amount}";
