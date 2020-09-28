@@ -22,7 +22,7 @@ public class GrowingResource
         // A random variance to apply
         public int growthVariance;
 
-        public GrowthStage(string id, int ticks, int variance) : base(id)
+        public GrowthStage(string id, int ticks, int variance) : base("Growable/" + id)
         {
             growthTicks = ticks;
             growthVariance = variance;

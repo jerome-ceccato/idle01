@@ -1,7 +1,7 @@
 ﻿using System;
 public class Terrain : Entity
 {
-    public Terrain(string id) : base(id)
+    public Terrain(string id) : base("Terrain/" + id)
     {
     }
 
