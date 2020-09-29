@@ -6,6 +6,30 @@ public sealed class TileContainer
     // nullable
     public Building building;
 
+    // nullable
+    public GrowableEntity GrowableEntity
+    {
+        get
+        {
+            return GrowableTerrain?.CurrentlyGrowingEntity;
+        }
+    }
+
+    private GrowableTerrain GrowableTerrain
+    {
+        get
+        {
+            if (terrain is GrowableTerrain)
+            {
+                return ((GrowableTerrain)terrain);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+
     public TileContainer(Terrain terrain, Building building)
     {
         this.terrain = terrain;
@@ -20,3 +44,4 @@ public sealed class TileContainer
         }
     }
 }
+

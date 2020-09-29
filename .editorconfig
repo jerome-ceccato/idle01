@@ -5,3 +5,9 @@ csharp_style_prefer_switch_expression = false:suggestion
 
 # IDE0044: Add readonly modifier
 dotnet_style_readonly_field = false:suggestion
+
+# IDE0038: Use pattern matching
+dotnet_diagnostic.IDE0038.severity = silent
+
+# CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+dotnet_diagnostic.CS8632.severity = silent

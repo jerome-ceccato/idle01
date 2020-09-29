@@ -7,60 +7,60 @@ public class Map : MonoBehaviour
     public Tilemap terrainTilemap;
     public Tilemap growableTilemap;
     public Tilemap buildingsTilemap;
-    
+
+    private List<Tilemap> allTilemaps;
     private TileResources tileResources;
     
     void Start()
     {
         tileResources = GetComponent<TileResources>();
+        allTilemaps = new List<Tilemap>
+        {
+            terrainTilemap,
+            growableTilemap,
+            buildingsTilemap
+        };
 
-        LoadLevel(GameManager.Instance.Level);
+        ReloadLevel(GameManager.Instance.Level);
     }
 
-    private void LoadLevel(Dictionary<Vector2Int, TileContainer> level)
+    private void ReloadLevel(Dictionary<Vector2Int, TileContainer> level)
     {
+        // TODO: caching
+        allTilemaps.ForEach(t => t.ClearAllTiles());
         foreach (var item in level)
         {
             Vector3Int position = item.Key.To3D();
             TileContainer tile = item.Value;
 
+            LoadTile(position, tile);
+        }
+        allTilemaps.ForEach(t => t.RefreshAllTiles());
+    }
+
+    private void LoadTile(Vector3Int position, TileContainer tile)
+    {
+        // Terrain
+        if (tile.terrain != null)
+        {
             terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain.entity));
         }
-    
-        terrainTilemap.RefreshAllTiles();
-        UpdateBuildings(level);
-    }
 
-    private void UpdateBuildings(Dictionary<Vector2Int, TileContainer> level)
-    {
-        growableTilemap.ClearAllTiles();
-        buildingsTilemap.ClearAllTiles();
-        foreach (var item in level)
+        // Growable
+        if (tile.GrowableEntity != null)
         {
-            Vector3Int position = item.Key.To3D();
-            TileContainer tile = item.Value;
-
-            if (tile.terrain is GrowableTerrain)
-            {
-                GrowableTerrain terrain = (GrowableTerrain)tile.terrain;
-                if (terrain.CurrentlyGrowingEntity?.Id != null)
-                {
-                    growableTilemap.SetTile(position, tileResources.TileForEntity(terrain.CurrentlyGrowingEntity));
-                }
-
-            }
-
-            if (tile.building != null)
-            {
-                buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building.entity));
-            }
+            growableTilemap.SetTile(position, tileResources.TileForEntity(tile.GrowableEntity));
         }
-        growableTilemap.RefreshAllTiles();
-        buildingsTilemap.RefreshAllTiles();
+
+        // Building
+        if (tile.building != null)
+        {
+            buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building.entity));
+        }
     }
 
     void Update()
     {
-        UpdateBuildings(GameManager.Instance.Level);
+        ReloadLevel(GameManager.Instance.Level);
     }
 }
