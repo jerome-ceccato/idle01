@@ -47,9 +47,9 @@ public class Map : MonoBehaviour
         }
 
         // Growable
-        if (tile.GrowableEntity != null)
+        if (tile.growable?.CurrentlyGrowingEntity != null)
         {
-            growableTilemap.SetTile(position, tileResources.TileForEntity(tile.GrowableEntity));
+            growableTilemap.SetTile(position, tileResources.TileForEntity(tile.growable.CurrentlyGrowingEntity));
         }
 
         // Building

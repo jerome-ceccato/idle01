@@ -21,13 +21,14 @@ public sealed class GameManager
 
     private void LoadInitialLevel()
     {
-        for (int x = 0; x < 1; x++)
+        for (int x = 0; x < 3; x++)
         {
-            for (int y = 0; y < 1; y++)
+            for (int y = 0; y < 3; y++)
             {
-                Terrain terrain = TerrainFactory.grassField();
+                Terrain terrain = TerrainFactory.GrassField();
+                Growable growable = GrowableFactory.Wheat();
                 Building building = null;
-                TileContainer tileContainer = new TileContainer(terrain, building);
+                TileContainer tileContainer = new TileContainer(terrain, growable, building);
                 
                 Level.Add(new Vector2Int(x, y), tileContainer);
             }

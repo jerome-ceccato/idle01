@@ -2,14 +2,8 @@
 
 public class TerrainFactory
 {
-    public static GrowableTerrain grassField()
+    public static Terrain GrassField()
     {
-        return new GrowableTerrain(new TerrainEntity("grassField"),
-            new GrowingResource(new List<GrowingResource.GrowthStage>()
-            {
-                new GrowingResource.GrowthStage(new GrowableEntity("plant1"), 20, 10),
-                new GrowingResource.GrowthStage(new GrowableEntity("plant2"), 20, 10),
-            },
-            new GrowingResource.TileResource(Resources.food, 1)));
+        return new Terrain(new TerrainEntity("grassField"));
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GrowingResource
+public class Growable
 {
     public sealed class TileResource
     {
@@ -37,7 +37,7 @@ public class GrowingResource
     private TileResource resource;
     private bool done;
 
-    public GrowingResource(List<GrowthStage> stages, TileResource resource)
+    public Growable(List<GrowthStage> stages, TileResource resource)
     {
         this.stages = stages;
         this.resource = resource;

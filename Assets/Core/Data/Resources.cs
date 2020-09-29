@@ -2,5 +2,5 @@
 
 public class Resources
 {
-    public static ResourceEntity food = new ResourceEntity("food");
+    public static ResourceEntity wheat = new ResourceEntity("wheat");
 }

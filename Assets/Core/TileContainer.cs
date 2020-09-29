@@ -4,44 +4,22 @@ public sealed class TileContainer
 {
     public Terrain terrain;
     // nullable
+    public Growable growable;
+    // nullable
     public Building building;
 
-    // nullable
-    public GrowableEntity GrowableEntity
-    {
-        get
-        {
-            return GrowableTerrain?.CurrentlyGrowingEntity;
-        }
-    }
-
-    private GrowableTerrain GrowableTerrain
-    {
-        get
-        {
-            if (terrain is GrowableTerrain)
-            {
-                return ((GrowableTerrain)terrain);
-            }
-            else
-            {
-                return null;
-            }
-        }
-    }
-
-    public TileContainer(Terrain terrain, Building building)
+    public TileContainer(Terrain terrain, Growable growable, Building building)
     {
         this.terrain = terrain;
+        this.growable = growable;
         this.building = building;
     }
 
     public void Tick()
     {
-        if (terrain is GrowableTerrain)
-        {
-            ((GrowableTerrain)terrain).Tick();
-        }
+        terrain.Tick();
+        growable?.Tick();
+        building?.Tick();
     }
 }
 
