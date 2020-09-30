@@ -25,12 +25,24 @@ public sealed class GameManager
         {
             for (int y = 0; y < 3; y++)
             {
-                Terrain terrain = TerrainFactory.GrassField();
-                Growable growable = GrowableFactory.Wheat();
-                Building building = null;
-                TileContainer tileContainer = new TileContainer(terrain, growable, building);
-                
-                Level.Add(new Vector2Int(x, y), tileContainer);
+                if ((x == 1 && y == 0) || (x == 0 && y == 1))
+                {
+                    Terrain terrain = TerrainFactory.GrassField();
+                    Growable growable = GrowableFactory.Wheat();
+                    Building building = null;
+                    TileContainer tileContainer = new TileContainer(terrain, growable, building);
+
+                    Level.Add(new Vector2Int(x, y), tileContainer);
+                }
+                else
+                {
+                    Terrain terrain = TerrainFactory.Dirt();
+                    Growable growable = null;
+                    Building building = null;
+                    TileContainer tileContainer = new TileContainer(terrain, growable, building);
+
+                    Level.Add(new Vector2Int(x, y), tileContainer);
+                }
             }
         }
     }
