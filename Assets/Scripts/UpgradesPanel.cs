@@ -5,24 +5,21 @@ using System.Linq;
 
 public class UpgradesPanel : MonoBehaviour
 {
-    public GameObject entryPrefab;
-    private Rect entryRect;
-
-    private List<GameObject> existingEntries = new List<GameObject>();
+    private ListBuilder listBuilder;
 
     private void Start()
     {
-        entryRect = ((RectTransform)entryPrefab.transform).rect;
+        listBuilder = GetComponent<ListBuilder>();
     }
 
     void OnGUI()
     {
         GameState state = GameManager.Instance.state;
 
-        createEntries(state.unlockedUpgrades.Count);
+        listBuilder.UpdateNumberOfEntries(state.unlockedUpgrades.Count);
         for (int i = 0; i < state.unlockedUpgrades.Count; i++)
         {
-            GameObject entry = existingEntries[i];
+            GameObject entry = listBuilder.Entries[i];
             Upgrade upgrade = state.unlockedUpgrades[i];
             Text textField = entry.GetComponentInChildren<Text>();
             Button button = entry.GetComponentInChildren<Button>();
@@ -32,23 +29,6 @@ public class UpgradesPanel : MonoBehaviour
 
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => GameManager.Instance.BuyUpgrade(upgrade));
-        }
-    }
-
-    private void createEntries(int number)
-    {
-        for (int i = existingEntries.Count; i < number; i++)
-        {
-            GameObject entry = Instantiate(entryPrefab, gameObject.transform);
-
-            entry.transform.Translate(0, -(entryRect.height * i), 0);
-            existingEntries.Add(entry);
-        }
-
-        for (int i = existingEntries.Count - 1; i >= number; i--)
-        {
-            Destroy(existingEntries[i]);
-            existingEntries.RemoveAt(i);
         }
     }
 }
