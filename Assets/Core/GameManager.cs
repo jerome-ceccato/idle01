@@ -1,66 +1,65 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public sealed class GameManager
 {
     public GameState state;
-    public Dictionary<Vector2Int, TileContainer> Level;
+    private GameRules rules;
 
     // Lifecycle
 
     private GameManager()
     {
-        Level = new Dictionary<Vector2Int, TileContainer>();
         state = new GameState();
+        rules = new GameRules();
     }
 
     public void Start() 
-    {
-        LoadInitialLevel();
-    }
-
-    private void LoadInitialLevel()
     {
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
-                if ((x == 1 && y == 0) || (x == 0 && y == 1))
-                {
-                    Terrain terrain = TerrainFactory.GrassField();
-                    Growable growable = GrowableFactory.Wheat();
-                    Building building = null;
-                    TileContainer tileContainer = new TileContainer(terrain, growable, building);
-
-                    Level.Add(new Vector2Int(x, y), tileContainer);
-                }
-                else
-                {
-                    Terrain terrain = TerrainFactory.Dirt();
-                    Growable growable = null;
-                    Building building = null;
-                    TileContainer tileContainer = new TileContainer(terrain, growable, building);
-
-                    Level.Add(new Vector2Int(x, y), tileContainer);
-                }
+                TerrainEntity terrain = (x == 1 && y == 1) ? Terrains.grass : Terrains.dirt;
+                GrowableGroup growable = (x == 1 && y == 1) ? Growables.Wheat() : null;
+                BuildingEntity building = null;
+                state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
             }
         }
     }
 
-    public void AddResource(ResourceEntity r, int amount)
-    {
-        if (!state.resources.ContainsKey(r))
-        {
-            state.resources.Add(r, 0);
-        }
-        state.resources[r] += amount;
-    }
-
     public void Tick() 
     {
-        foreach (TileContainer container in Level.Values)
+        // tmp
+
+    
+            foreach (TileContainer tile in state.world.Values)
+            {
+            if (tile.growable != null)
+            {
+                if (Random.Range(0, 10) == 1)
+                {
+                    tile.growable.Grow();
+                }
+            }
+                
+            }
+        
+    }
+
+    public void CollectGrowable(GrowableGroup growable)
+    {
+        if (growable.CanCollect())
         {
-            container.Tick();
+            ResourceEntity resource = rules.ResourceForGrowable(growable);
+            if (resource != null)
+            {
+                Multiplier multiplier = rules.MultiplierForGrowable(growable);
+                BigInteger amount = multiplier.Apply(new BigInteger(1));
+                state.AddResource(resource, amount);
+            }
+            growable.Reset();
         }
     }
 

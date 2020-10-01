@@ -2,24 +2,16 @@
 
 public sealed class TileContainer
 {
-    public Terrain terrain;
+    public TerrainEntity terrain;
     // nullable
-    public Growable growable;
+    public GrowableGroup growable;
     // nullable
-    public Building building;
+    public BuildingEntity building;
 
-    public TileContainer(Terrain terrain, Growable growable, Building building)
+    public TileContainer(TerrainEntity terrain, GrowableGroup growable, BuildingEntity building)
     {
         this.terrain = terrain;
         this.growable = growable;
         this.building = building;
     }
-
-    public void Tick()
-    {
-        terrain.Tick();
-        growable?.Tick();
-        building?.Tick();
-    }
 }
-

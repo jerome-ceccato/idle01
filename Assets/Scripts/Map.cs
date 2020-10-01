@@ -21,10 +21,10 @@ public class Map : MonoBehaviour
             buildingsTilemap
         };
 
-        ReloadLevel(GameManager.Instance.Level);
+        ReloadWorld(GameManager.Instance.state.world);
     }
 
-    private void ReloadLevel(Dictionary<Vector2Int, TileContainer> level)
+    private void ReloadWorld(Dictionary<Vector2Int, TileContainer> level)
     {
         // TODO: caching
         allTilemaps.ForEach(t => t.ClearAllTiles());
@@ -43,24 +43,24 @@ public class Map : MonoBehaviour
         // Terrain
         if (tile.terrain != null)
         {
-            terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain.entity));
+            terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain));
         }
 
         // Growable
-        if (tile.growable?.CurrentlyGrowingEntity != null)
+        if (tile.growable?.CurrentStage != null)
         {
-            growableTilemap.SetTile(position, tileResources.TileForEntity(tile.growable.CurrentlyGrowingEntity));
+            growableTilemap.SetTile(position, tileResources.TileForEntity(tile.growable.CurrentStage));
         }
 
         // Building
         if (tile.building != null)
         {
-            buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building.entity));
+            buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building));
         }
     }
 
     void Update()
     {
-        ReloadLevel(GameManager.Instance.Level);
+        ReloadWorld(GameManager.Instance.state.world);
     }
 }

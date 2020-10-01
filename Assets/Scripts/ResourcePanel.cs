@@ -22,7 +22,7 @@ public class ResourcePanel : MonoBehaviour
             BigInteger amount = state.resources[resource];
             Text textField = entry.GetComponentInChildren<Text>();
 
-            textField.text = $"{resource.Id}: {amount}";
+            textField.text = $"{resource.DisplayName}: {amount}";
         }
     }
 
