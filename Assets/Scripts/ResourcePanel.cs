@@ -33,5 +33,11 @@ public class ResourcePanel : MonoBehaviour
             GameObject entry = Instantiate(entryPrefab, gameObject.transform);
             existingEntries.Add(entry);
         }
+
+        for (int i = existingEntries.Count - 1; i >= number ; i--)
+        {
+            Destroy(existingEntries[i]);
+            existingEntries.RemoveAt(i);
+        }
     }
 }

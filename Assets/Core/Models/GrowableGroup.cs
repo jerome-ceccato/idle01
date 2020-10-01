@@ -1,20 +1,29 @@
 ﻿using System.Collections.Generic;
 using Unity.Mathematics;
+using System.Linq;
 
 public sealed class GrowableGroup
 {
-    public string Id { get; private set; }
-    public List<GrowingEntity> Stages { get; private set; }
+    public class Stage: Identifiable
+    {
+        public Stage(string id) : base(id) { }
+    }
+
+    public GrowableEntity Entity { get; private set; }
+
+    public ResourceEntity GrownResource { get; private set; }
+    public List<Stage> Stages { get; private set; }
 
     // nullable
-    public GrowingEntity CurrentStage { get; private set; }
+    public Stage CurrentStage { get; private set; }
 
     private int currentIndex;
     
-    public GrowableGroup(string id, List<GrowingEntity> stages)
+    public GrowableGroup(GrowableEntity entity, ResourceEntity grownResource, List<string> stageIdentifiers)
     {
-        Id = "growable_" + id;
-        Stages = stages;
+        Entity = entity;
+        GrownResource = grownResource;
+        Stages = new List<Stage>(stageIdentifiers.Select(id => new Stage("Growable/" + id)));
         currentIndex = -1;
         CurrentStage = null;
     }

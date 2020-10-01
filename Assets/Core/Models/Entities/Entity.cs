@@ -1,15 +1,13 @@
 ﻿using System;
 
-// An immutable identifiable resource
-public abstract class Entity
+// An immutable identifiable entity
+public abstract class Entity : Identifiable
 {
-    public string Id { get; private set; }
     public string DisplayName { get; private set; }
     public string FlavorText { get; private set; }
 
-    protected Entity(string id, string displayName, string flavorText)
+    protected Entity(string id, string displayName, string flavorText) : base(id)
     {
-        Id = id;
         DisplayName = displayName;
         FlavorText = flavorText;
     }

@@ -4,18 +4,22 @@ using System.Collections.Generic;
 
 public class GameRules
 {
-    public ResourceEntity ResourceForGrowable(GrowableGroup growable)
-    {
-        Dictionary<string, ResourceEntity> resources = new Dictionary<string, ResourceEntity>()
-        {
-            { "growable_wheat", Resources.wheat },
-        };
+    private readonly GameState gameState;
 
-        return resources[growable.Id];
+    public GameRules(GameState gameState)
+    {
+        this.gameState = gameState;
     }
 
     public Multiplier MultiplierForGrowable(GrowableGroup growable)
     {
-        return new Multiplier();
+        foreach (Upgrade upgrade in gameState.ownedUpgrades)
+        {
+            if (upgrade.Effect.Target == growable.Entity)
+            {
+                return upgrade.Effect.Multiplier;
+            }
+        }
+        return Multiplier.Identity();
     }
 }

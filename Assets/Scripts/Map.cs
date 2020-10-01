@@ -43,19 +43,19 @@ public class Map : MonoBehaviour
         // Terrain
         if (tile.terrain != null)
         {
-            terrainTilemap.SetTile(position, tileResources.TileForEntity(tile.terrain));
+            terrainTilemap.SetTile(position, tileResources.TileForIdentifiable(tile.terrain));
         }
 
         // Growable
         if (tile.growable?.CurrentStage != null)
         {
-            growableTilemap.SetTile(position, tileResources.TileForEntity(tile.growable.CurrentStage));
+            growableTilemap.SetTile(position, tileResources.TileForIdentifiable(tile.growable.CurrentStage));
         }
 
         // Building
         if (tile.building != null)
         {
-            buildingsTilemap.SetTile(position, tileResources.TileForEntity(tile.building));
+            buildingsTilemap.SetTile(position, tileResources.TileForIdentifiable(tile.building));
         }
     }
 

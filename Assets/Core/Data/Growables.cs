@@ -2,12 +2,18 @@
 
 public class Growables
 {
+    public static GrowableEntity growableWheat = new GrowableEntity("wheat", "Wheat", "Wheat is starting to grow here");
+
     public static GrowableGroup Wheat()
     {
-        return new GrowableGroup("wheat", new List<GrowingEntity>()
-        {
-            new GrowingEntity("wheat1", "Wheat", "Wheat is starting to grow here"),
-            new GrowingEntity("wheat2", "Wheat", "Some fully grown wheat"),
-        });
+        return new GrowableGroup(
+            growableWheat,
+            Resources.wheat,
+            new List<string>()
+            {
+                "wheat1",
+                "wheat2",
+            }
+        );
     }
 }

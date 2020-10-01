@@ -7,7 +7,7 @@ public class TileResources: MonoBehaviour
     public Tile template;
     private Dictionary<string, Tile> cache = new Dictionary<string, Tile>();
     
-    public Tile TileForEntity(Entity e)
+    public Tile TileForIdentifiable(Identifiable e)
     {
         string key = e.Id;
 

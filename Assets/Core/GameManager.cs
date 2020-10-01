@@ -12,7 +12,7 @@ public sealed class GameManager
     private GameManager()
     {
         state = new GameState();
-        rules = new GameRules();
+        rules = new GameRules(state);
     }
 
     public void Start() 
@@ -52,14 +52,18 @@ public sealed class GameManager
     {
         if (growable.CanCollect())
         {
-            ResourceEntity resource = rules.ResourceForGrowable(growable);
-            if (resource != null)
-            {
-                Multiplier multiplier = rules.MultiplierForGrowable(growable);
-                BigInteger amount = multiplier.Apply(new BigInteger(1));
-                state.AddResource(resource, amount);
-            }
+            Multiplier multiplier = rules.MultiplierForGrowable(growable);
+            BigInteger amount = multiplier.Apply(new BigInteger(1));
+            state.AddResource(growable.GrownResource, amount);
             growable.Reset();
+        }
+    }
+
+    public void BuyUpgrade(Upgrade upgrade)
+    {
+        if (state.CanAfford(upgrade.Cost))
+        {
+            state.UnlockUpgrade(upgrade);
         }
     }
 
