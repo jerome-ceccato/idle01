@@ -14,11 +14,22 @@ public class MouseClickHandler : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            TileContainer tileContainer = mouseHelper.TileContainerForCurrentMousePosition();
-            if (tileContainer?.growable != null)
+            Vector2Int tileCoordinates = mouseHelper.TileCoordinateForCurrentMousePosition();
+            TileContainer tileContainer = GameManager.Instance.TileContainerAtPosition(tileCoordinates);
+            if (tileContainer != null)
             {
-                GameManager.Instance.CollectGrowable(tileContainer.growable);
+                if (tileContainer.growable != null)
+                {
+                    GameManager.Instance.CollectGrowable(tileContainer.growable);
+                }
+
+                UIManager.Instance.State = UIState.TileSelected(tileContainer, tileCoordinates);
             }
+            else
+            {
+                UIManager.Instance.State = UIState.Default();
+            }
+            
         }
     }
 }

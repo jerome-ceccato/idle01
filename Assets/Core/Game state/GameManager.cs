@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class GameManager
 {
-    public GameState state;
+    private GameState state;
     private GameRules rules;
 
     // Lifecycle
@@ -65,6 +65,48 @@ public sealed class GameManager
         {
             state.UnlockUpgrade(upgrade);
         }
+    }
+
+    public TileContainer TileContainerAtPosition(Vector2Int position)
+    {
+        return state.world.ContainsKey(position) ? state.world[position] : null;
+    }
+
+    public Dictionary<Vector2Int, TileContainer> World
+    {
+        get
+        {
+            return state.world;
+        }
+    }
+
+    public Dictionary<ResourceEntity, BigInteger> OwnedResources
+    {
+        get
+        {
+            return state.resources;
+        }
+    }
+
+    public List<Upgrade> OwnedUpgrades
+    {
+        get
+        {
+            return state.ownedUpgrades;
+        }
+    }
+
+    public List<Upgrade> AvailableUpgrades
+    {
+        get
+        {
+            return state.unlockedUpgrades;
+        }
+    }
+
+    public bool CanAfford(Upgrade upgrade)
+    {
+        return state.CanAfford(upgrade.Cost);
     }
 
     // Singleton boilerplate

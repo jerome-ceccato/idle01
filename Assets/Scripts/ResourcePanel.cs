@@ -2,30 +2,26 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Linq;
 
 public class ResourcePanel : MonoBehaviour
 {
-    private ListBuilder listBuilder;
+    private Text contentText;
 
     private void Start()
     {
-        listBuilder = GetComponent<ListBuilder>();
+        contentText = GetComponentInChildren<Text>();
     }
 
     void OnGUI()
     {
-        GameState state = GameManager.Instance.state;
-        List<ResourceEntity> resources = new List<ResourceEntity>(state.resources.Keys);
+        Dictionary<ResourceEntity, BigInteger> ownedResources = GameManager.Instance.OwnedResources;
 
-        listBuilder.UpdateNumberOfEntries(resources.Count);
-        for (int i = 0; i < resources.Count; i++)
+        string content = string.Join(", ", ownedResources.Select((item) =>
         {
-            GameObject entry = listBuilder.Entries[i];
-            ResourceEntity resource = resources[i];
-            BigInteger amount = state.resources[resource];
-            Text textField = entry.GetComponentInChildren<Text>();
+            return $"{item.Key.DisplayName}: {item.Value}";
+        }));
 
-            textField.text = $"{resource.DisplayName}: {amount}";
-        }
+        contentText.text = content;
     }
 }

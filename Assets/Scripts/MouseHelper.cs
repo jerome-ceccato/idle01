@@ -28,6 +28,6 @@ public class MouseHelper : MonoBehaviour
     public TileContainer TileContainerForCurrentMousePosition()
     {
         Vector2Int position = TileCoordinateForCurrentMousePosition();
-        return GameManager.Instance.state.world.ContainsKey(position) ? GameManager.Instance.state.world[position] : null;
+        return GameManager.Instance.TileContainerAtPosition(position);
     }
 }

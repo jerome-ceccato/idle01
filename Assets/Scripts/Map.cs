@@ -21,7 +21,7 @@ public class Map : MonoBehaviour
             buildingsTilemap
         };
 
-        ReloadWorld(GameManager.Instance.state.world);
+        ReloadWorld(GameManager.Instance.World);
     }
 
     private void ReloadWorld(Dictionary<Vector2Int, TileContainer> level)
@@ -61,6 +61,6 @@ public class Map : MonoBehaviour
 
     void Update()
     {
-        ReloadWorld(GameManager.Instance.state.world);
+        ReloadWorld(GameManager.Instance.World);
     }
 }
