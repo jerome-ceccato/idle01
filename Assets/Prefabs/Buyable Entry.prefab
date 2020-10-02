@@ -169,7 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0da806174115b4fb5bf56fe8e85d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: {fileID: 285194281868634614}
   enabledColor: {r: 1, g: 1, b: 1, a: 0.09019608}
   disabledColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &285194281994095325
@@ -341,7 +340,7 @@ GameObject:
   - component: {fileID: 629334735588829068}
   - component: {fileID: 3032814606017791879}
   m_Layer: 5
-  m_Name: Upgrade Entry
+  m_Name: Buyable Entry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

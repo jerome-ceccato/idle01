@@ -19,13 +19,14 @@ public class CurrentTilePanel : MonoBehaviour
                 terrainInformation.enabled = false;
                 growableInformation.enabled = false;
                 break;
+
             case UIState.Value.TileSelected:
                 currentTileInformation.text = $"Selected at {state.tilePosition}";
 
                 terrainInformation.text = $"{state.tileContainer.terrain.DisplayName}: {state.tileContainer.terrain.FlavorText}";
                 terrainInformation.enabled = true;
 
-                if (state.tileContainer.growable?.CurrentStage != null)
+                if (state.tileContainer.growable != null && state.tileContainer.growable.CanCollect())
                 {
                     growableInformation.text = $"Contains {state.tileContainer.growable.Entity.DisplayName}";
                     growableInformation.enabled = true;
