@@ -28,7 +28,7 @@ public sealed class GameState
         resources[resource] = BigInteger.Add(owned, amount);
     }
 
-    public bool CanAfford(Cost cost)
+    public bool CanAfford(BaseCost cost)
     {
         foreach (var item in cost.Resources)
         {

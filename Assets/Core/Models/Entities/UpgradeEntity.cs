@@ -1,9 +1,16 @@
-﻿using System;
-public class UpgradeEntity : Entity
+﻿public class UpgradeEntity : Entity
 {
-    public UpgradeEntity(string id, string displayName, string flavorText)
+    public BaseCost BuyCost { get; private set; }
+
+    public UpgradeEffect Effect { get; private set; }
+
+    public UnlockRule UnlockRule { get; private set; }
+
+    public UpgradeEntity(string id, string displayName, string flavorText, BaseCost buyCost, UpgradeEffect effect, UnlockRule rule)
         : base("Upgrade/" + id, displayName, flavorText)
     {
-
+        BuyCost = buyCost;
+        Effect = effect;
+        UnlockRule = rule;
     }
 }

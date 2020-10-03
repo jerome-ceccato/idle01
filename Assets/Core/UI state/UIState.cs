@@ -10,6 +10,7 @@ public class UIState
     }
 
     public readonly Value state;
+
     // Only available in TileSelected
     public readonly TileContainer tileContainer;
     public readonly Vector2Int tilePosition;

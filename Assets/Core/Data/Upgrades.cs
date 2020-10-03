@@ -7,8 +7,8 @@ public class Upgrades
     {
         new Upgrade(
             new UpgradeEntity("fertilizer1", "Basic fertilizer", "It smells but it makes wheat grow faster"),
-            new Cost(Resources.wheat, 5),
-            new Effect(Growables.growableWheat, Multiplier.AddingBaseValue(1))
+            new BaseCost(Resources.wheat, 5),
+            new UpgradeEffect(Growables.growableWheat, Multiplier.AddingBaseValue(1))
         ),
     };
 }
