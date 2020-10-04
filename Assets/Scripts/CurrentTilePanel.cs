@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CurrentTilePanel : MonoBehaviour
@@ -8,6 +6,8 @@ public class CurrentTilePanel : MonoBehaviour
     public Text currentTileInformation;
     public Text terrainInformation;
     public Text growableInformation;
+    public Text buildingNameInformation;
+    public Text buildingDescriptionInformation;
 
     void OnGUI()
     {
@@ -18,6 +18,8 @@ public class CurrentTilePanel : MonoBehaviour
                 currentTileInformation.text = "No tile selected";
                 terrainInformation.enabled = false;
                 growableInformation.enabled = false;
+                buildingNameInformation.enabled = false;
+                buildingDescriptionInformation.enabled = false;
                 break;
 
             case UIState.Value.TileSelected:
@@ -34,6 +36,19 @@ public class CurrentTilePanel : MonoBehaviour
                 else
                 {
                     growableInformation.enabled = false;
+                }
+
+                if (state.tileContainer.building != null)
+                {
+                    buildingNameInformation.text = $"Built: {state.tileContainer.building.Entity.DisplayName}";
+                    buildingDescriptionInformation.text = state.tileContainer.building.Entity.FlavorText;
+                    buildingNameInformation.enabled = true;
+                    buildingDescriptionInformation.enabled = true;
+                }
+                else
+                {
+                    buildingNameInformation.enabled = false;
+                    buildingDescriptionInformation.enabled = false;
                 }
                 break;
         }

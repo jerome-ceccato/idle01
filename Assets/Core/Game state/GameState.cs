@@ -20,7 +20,10 @@ public sealed class GameState
         resources = new Dictionary<ResourceEntity, BigInteger>();
         world = new Dictionary<Vector2Int, TileContainer>();
 
-        unlockedBuildings = new List<BuildingEntity>();
+        unlockedBuildings = new List<BuildingEntity>()
+        {
+            Buildings.farmer,
+        };
         otherBuildings = new List<BuildingEntity>();
 
         ownedUpgrades = new List<UpgradeEntity>();
@@ -65,6 +68,17 @@ public sealed class GameState
 
         unlockedUpgrades.Remove(upgrade);
         ownedUpgrades.Add(upgrade);
+    }
+
+    public void Build(BuildingEntity building, TileContainer tileContainer)
+    {
+        // TODO: Missing multipliers
+        foreach (Generator item in building.BuildCost.Resources)
+        {
+            resources[item.Resource] -= item.Amount;
+        }
+
+        tileContainer.building = new BuildingIncarnation(building);
     }
 
     public bool Generate(BuildingEffectGenerator building)
