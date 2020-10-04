@@ -31,21 +31,14 @@ public sealed class GameManager
 
     public void Tick() 
     {
-        // tmp
-
-    
-            foreach (TileContainer tile in state.world.Values)
-            {
+        // TODO: improve
+        foreach (TileContainer tile in state.world.Values)
+        {
             if (tile.growable != null)
             {
-                if (Random.Range(0, 10) == 1)
-                {
-                    tile.growable.Grow();
-                }
+                tile.growable.Grow();
             }
-                
-            }
-        
+        }
     }
 
     public void CollectGrowable(GrowableIncarnation growable)

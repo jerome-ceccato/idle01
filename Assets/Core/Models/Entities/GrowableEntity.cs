@@ -11,7 +11,7 @@ public sealed class GrowableEntity : Entity
 
         public Stage(string id, int ticks)
         {
-            SpriteId = id;
+            SpriteId = "Growable/" + id;
             Ticks = ticks;
         }
     }

@@ -40,7 +40,7 @@ public class GrowableIncarnation
         if (currentStageIndex < (Entity.Stages.Count - 1))
         {
             currentTick += growthTicks;
-            // TODO: calculate index
+            currentStageIndex = StageIndexForTick(currentTick);
         }
     }
 
@@ -48,5 +48,22 @@ public class GrowableIncarnation
     {
         currentStageIndex = -1;
         currentTick = 0;
+    }
+
+    private int StageIndexForTick(int ticks)
+    {
+        int index = 0;
+        for (; index < Entity.Stages.Count; index++)
+        {
+            if (ticks < Entity.Stages[index].Ticks)
+            {
+                return index - 1;
+            }
+            else
+            {
+                ticks -= Entity.Stages[index].Ticks;
+            }
+        }
+        return index - 1;
     }
 }
