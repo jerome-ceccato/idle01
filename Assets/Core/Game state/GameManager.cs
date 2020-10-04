@@ -42,9 +42,25 @@ public sealed class GameManager
             {
                 if (tile.building.Ticker.MakeTick(1))
                 {
-                    state.Generate(tile.building.Entity);
+                    TickBuilding(tile);
                 }
             }
+        }
+    }
+
+    private void TickBuilding(TileContainer tile)
+    {
+        if (tile.building.Entity.Effect is BuildingEffectGenerator generator)
+        {
+            state.Generate(generator);
+        }
+        else if (tile.building.Entity.Effect is BuildingEffectHarvester)
+        {
+            if (tile.growable != null)
+            {
+                CollectGrowable(tile.growable);
+            }
+            
         }
     }
 

@@ -9,6 +9,6 @@ public class BuildingIncarnation
     public BuildingIncarnation(BuildingEntity entity)
     {
         Entity = entity;
-        Ticker = new Ticker(entity.GeneratorFrequency);
+        Ticker = new Ticker(entity.EffectFrequency);
     }
 }

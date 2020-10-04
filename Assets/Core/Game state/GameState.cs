@@ -67,7 +67,7 @@ public sealed class GameState
         ownedUpgrades.Add(upgrade);
     }
 
-    public bool Generate(BuildingEntity building)
+    public bool Generate(BuildingEffectGenerator building)
     {
         // TODO: Missing multipliers
         foreach (Generator costs in building.Consumed)
