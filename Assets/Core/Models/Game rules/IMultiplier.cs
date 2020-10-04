@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
 
 // An object that can alter a number depending on a set of rules
-public interface Multiplier
+public interface IMultiplier
 {
     BigInteger Apply(BigInteger input);
 }
 
-public class MultiplierIdentity : Multiplier
+public class MultiplierIdentity : IMultiplier
 {
     public BigInteger Apply(BigInteger input)
     {
@@ -14,7 +14,7 @@ public class MultiplierIdentity : Multiplier
     }
 }
 
-public class MultiplierBaseValue : Multiplier
+public class MultiplierBaseValue : IMultiplier
 {
     private BigInteger value;
 

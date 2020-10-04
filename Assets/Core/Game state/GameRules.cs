@@ -12,7 +12,7 @@ public class GameRules
     }
 
     // TODO: improve
-    public Multiplier MultiplierForGrowable(GrowableIncarnation growable)
+    public IMultiplier MultiplierForGrowable(GrowableIncarnation growable)
     {
         foreach (UpgradeEntity upgrade in gameState.ownedUpgrades)
         {

@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 
 // An identifiable object representing a resource with an amount
-public class Generator : Identifiable
+public class Generator : IIdentifiable
 {
     public string Id { get; private set; }
 

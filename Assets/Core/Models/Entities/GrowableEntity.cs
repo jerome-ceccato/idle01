@@ -2,7 +2,7 @@
 
 public sealed class GrowableEntity : Entity
 {
-    public class Stage : Displayable
+    public class Stage : IDisplayable
     {
         public string SpriteId { get; private set; }
 

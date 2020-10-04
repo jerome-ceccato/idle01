@@ -1,4 +1,4 @@
-﻿public interface Displayable
+﻿public interface IDisplayable
 {
     string SpriteId { get; }
 }

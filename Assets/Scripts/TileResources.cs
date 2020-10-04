@@ -7,7 +7,7 @@ public class TileResources: MonoBehaviour
     public Tile template;
     private Dictionary<string, Tile> cache = new Dictionary<string, Tile>();
     
-    public Tile TileForDisplayable(Displayable e)
+    public Tile TileForDisplayable(IDisplayable e)
     {
         string key = e.SpriteId;
 

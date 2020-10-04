@@ -2,7 +2,7 @@
 
 // An immutable game entity
 // These are direct representation of the game's data, and not the player's current game state
-public abstract class Entity : Identifiable, Displayable
+public abstract class Entity : IIdentifiable, IDisplayable
 {
     public string Id { get; private set; }
 
@@ -25,7 +25,7 @@ public abstract class Entity : Identifiable, Displayable
 
     public override bool Equals(object obj)
     {
-        if (!(obj is Identifiable item))
+        if (!(obj is IIdentifiable item))
         {
             return false;
         }

@@ -5,10 +5,10 @@ public class BuildingEntity : Entity
     public UnlockRule UnlockRule { get; private set; }
     public BuildRule BuildRule { get; private set; }
 
-    public BuildingEffect Effect { get; private set; }
+    public IBuildingEffect Effect { get; private set; }
     public Frequency EffectFrequency { get; private set; }
 
-    public BuildingEntity(string id, string displayName, string flavorText, BaseCost cost, BuildingEffect effect, UnlockRule unlockRule, BuildRule buildRule, Frequency frequency) 
+    public BuildingEntity(string id, string displayName, string flavorText, BaseCost cost, IBuildingEffect effect, UnlockRule unlockRule, BuildRule buildRule, Frequency frequency) 
         : base("Building/" + id, displayName, flavorText)
     {
         BuildCost = cost;

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-public interface BuildingEffect
+public interface IBuildingEffect
 {
 
 }
 
-public class BuildingEffectGenerator
+public class BuildingEffectGenerator : IBuildingEffect
 {
     public List<Generator> Generated { get; private set; }
     public List<Generator> Consumed { get; private set; }
@@ -17,7 +17,7 @@ public class BuildingEffectGenerator
     }
 }
 
-public class BuildingEffectHarvester : BuildingEffect
+public class BuildingEffectHarvester : IBuildingEffect
 {
 
 }

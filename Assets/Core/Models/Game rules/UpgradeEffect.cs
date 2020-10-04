@@ -2,9 +2,9 @@
 public class UpgradeEffect
 {
     public Entity Target { get; private set; }
-    public Multiplier Multiplier { get; private set; }
+    public IMultiplier Multiplier { get; private set; }
 
-    public UpgradeEffect(Entity target, Multiplier multiplier)
+    public UpgradeEffect(Entity target, IMultiplier multiplier)
     {
         Target = target;
         Multiplier = multiplier;

@@ -68,7 +68,7 @@ public sealed class GameManager
     {
         if (growable.CanCollect())
         {
-            Multiplier multiplier = rules.MultiplierForGrowable(growable);
+            IMultiplier multiplier = rules.MultiplierForGrowable(growable);
             BigInteger amount = multiplier.Apply(growable.Entity.GrownResource.Amount);
             state.AddResource(growable.Entity.GrownResource.Resource, amount);
             growable.Reset();
