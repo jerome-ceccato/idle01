@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 // Incarnation of a growable: a growable in the world, with its own mutable data
 public class GrowableIncarnation
@@ -7,13 +7,13 @@ public class GrowableIncarnation
     public GrowableEntity Entity { get; private set; }
 
     private int currentStageIndex;
+    private List<int> resolvedTicks;
     private int currentTick;
 
     public GrowableIncarnation(GrowableEntity entity)
     {
         Entity = entity;
-        currentStageIndex = -1;
-        currentTick = 0;
+        Reset();
     }
 
     public GrowableEntity.Stage CurrentStage
@@ -49,20 +49,21 @@ public class GrowableIncarnation
     {
         currentStageIndex = -1;
         currentTick = 0;
+        resolvedTicks = new List<int>(Entity.Stages.Select(s => s.GrowthFrequency.PickValue()));
     }
 
     private int StageIndexForTick(int ticks)
     {
         int index = 0;
-        for (; index < Entity.Stages.Count; index++)
+        for (; index < resolvedTicks.Count; index++)
         {
-            if (ticks < Entity.Stages[index].Ticks)
+            if (ticks < resolvedTicks[index])
             {
                 return index - 1;
             }
             else
             {
-                ticks -= Entity.Stages[index].Ticks;
+                ticks -= resolvedTicks[index];
             }
         }
         return index - 1;

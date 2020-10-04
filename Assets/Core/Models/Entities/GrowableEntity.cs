@@ -5,18 +5,17 @@ public sealed class GrowableEntity : Entity
     public class Stage : IDisplayable
     {
         public string SpriteId { get; private set; }
+        public Frequency GrowthFrequency { get; private set; }
 
-        public int Ticks { get; private set; }
-
-        public Stage(string id, int ticks)
+        public Stage(string id, Frequency growthFrequency)
         {
             SpriteId = "Growable/" + id;
-            Ticks = ticks;
+            GrowthFrequency = growthFrequency;
         }
     }
         
     public List<Stage> Stages { get; private set; }
-
+    
     public Generator GrownResource { get; private set; }
 
     public GrowableEntity(string id, string displayName, string flavorText, Generator grownResource, List<Stage> stages)

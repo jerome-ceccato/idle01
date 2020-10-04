@@ -23,6 +23,7 @@ public sealed class GameState
         unlockedBuildings = new List<BuildingEntity>()
         {
             Buildings.farmer,
+            Buildings.farmerOld,
         };
         otherBuildings = new List<BuildingEntity>();
 

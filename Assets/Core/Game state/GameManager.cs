@@ -145,7 +145,7 @@ public sealed class GameManager
     {
         if (entity.BuildRule.PreviousBuilding != null)
         {
-            return entity.BuildRule.PreviousBuilding == entity;
+            return entity.BuildRule.PreviousBuilding == tile.building?.Entity;
         }
         else if (tile.building != null)
         {
