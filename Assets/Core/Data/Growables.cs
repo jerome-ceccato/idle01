@@ -2,18 +2,16 @@
 
 public class Growables
 {
-    public static GrowableEntity growableWheat = new GrowableEntity("wheat", "Wheat", "Wheat is starting to grow here");
+    public static GrowableEntity wheat = new GrowableEntity("wheat", "Wheat", "Wheat is growing here",
+        new Generator("growable_what", Resources.wheat, 1),
+        new List<GrowableEntity.Stage>
+        {
+            new GrowableEntity.Stage("wheat1", 20),
+            new GrowableEntity.Stage("wheat2", 20),
+        });
 
-    public static GrowableGroup Wheat()
+    public static GrowableIncarnation CreateWheat()
     {
-        return new GrowableGroup(
-            growableWheat,
-            Resources.wheat,
-            new List<string>()
-            {
-                "wheat1",
-                "wheat2",
-            }
-        );
+        return new GrowableIncarnation(wheat);
     }
 }

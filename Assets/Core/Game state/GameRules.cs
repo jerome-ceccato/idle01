@@ -11,15 +11,16 @@ public class GameRules
         this.gameState = gameState;
     }
 
-    public Multiplier MultiplierForGrowable(GrowableGroup growable)
+    // TODO: improve
+    public Multiplier MultiplierForGrowable(GrowableIncarnation growable)
     {
-        foreach (Upgrade upgrade in gameState.ownedUpgrades)
+        foreach (UpgradeEntity upgrade in gameState.ownedUpgrades)
         {
             if (upgrade.Effect.Target == growable.Entity)
             {
                 return upgrade.Effect.Multiplier;
             }
         }
-        return Multiplier.Identity();
+        return new MultiplierIdentity();
     }
 }

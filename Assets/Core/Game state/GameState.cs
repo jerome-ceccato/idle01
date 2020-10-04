@@ -8,18 +8,27 @@ public sealed class GameState
     public Dictionary<ResourceEntity, BigInteger> resources;
     public Dictionary<Vector2Int, TileContainer> world;
 
-    public List<Upgrade> ownedUpgrades;
-    public List<Upgrade> unlockedUpgrades;
-    public List<Upgrade> otherUpgrades;
+    public List<BuildingEntity> unlockedBuildings;
+    public List<BuildingEntity> otherBuildings;
+
+    public List<UpgradeEntity> ownedUpgrades;
+    public List<UpgradeEntity> unlockedUpgrades;
+    public List<UpgradeEntity> otherUpgrades;
 
     public GameState()
     {
         resources = new Dictionary<ResourceEntity, BigInteger>();
         world = new Dictionary<Vector2Int, TileContainer>();
 
-        ownedUpgrades = new List<Upgrade>();
-        unlockedUpgrades = new List<Upgrade>(Upgrades.all);
-        otherUpgrades = new List<Upgrade>();
+        unlockedBuildings = new List<BuildingEntity>();
+        otherBuildings = new List<BuildingEntity>();
+
+        ownedUpgrades = new List<UpgradeEntity>();
+        unlockedUpgrades = new List<UpgradeEntity>
+        {
+            Upgrades.basicFertilizer,
+        };
+        otherUpgrades = new List<UpgradeEntity>();
     }
 
     public void AddResource(ResourceEntity resource, BigInteger amount)
@@ -30,9 +39,10 @@ public sealed class GameState
 
     public bool CanAfford(BaseCost cost)
     {
-        foreach (var item in cost.Resources)
+        // TODO: Missing multipliers
+        foreach (Generator item in cost.Resources)
         {
-            if (!resources.ContainsKey(item.Item1) || resources[item.Item1] < item.Item2)
+            if (!resources.ContainsKey(item.Resource) || resources[item.Resource] < item.Amount)
             {
                 return false;
             }
@@ -40,11 +50,12 @@ public sealed class GameState
         return true;
     }
 
-    public void UnlockUpgrade(Upgrade upgrade)
+    public void UnlockUpgrade(UpgradeEntity upgrade)
     {
-        foreach (var item in upgrade.Cost.Resources)
+        // TODO: Missing multipliers
+        foreach (Generator item in upgrade.BuyCost.Resources)
         {
-            resources[item.Item1] -= item.Item2;
+            resources[item.Resource] -= item.Amount;
         }
 
         unlockedUpgrades.Remove(upgrade);

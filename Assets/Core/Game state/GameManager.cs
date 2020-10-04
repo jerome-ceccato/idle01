@@ -22,8 +22,8 @@ public sealed class GameManager
             for (int y = 0; y < 3; y++)
             {
                 TerrainEntity terrain = (x == 1 && y == 1) ? Terrains.grass : Terrains.dirt;
-                GrowableGroup growable = (x == 1 && y == 1) ? Growables.Wheat() : null;
-                BuildingEntity building = null;
+                GrowableIncarnation growable = (x == 1 && y == 1) ? Growables.CreateWheat() : null;
+                BuildingIncarnation building = null;
                 state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
             }
         }
@@ -48,20 +48,20 @@ public sealed class GameManager
         
     }
 
-    public void CollectGrowable(GrowableGroup growable)
+    public void CollectGrowable(GrowableIncarnation growable)
     {
         if (growable.CanCollect())
         {
             Multiplier multiplier = rules.MultiplierForGrowable(growable);
-            BigInteger amount = multiplier.Apply(new BigInteger(1));
-            state.AddResource(growable.GrownResource, amount);
+            BigInteger amount = multiplier.Apply(growable.Entity.GrownResource.Amount);
+            state.AddResource(growable.Entity.GrownResource.Resource, amount);
             growable.Reset();
         }
     }
 
-    public void BuyUpgrade(Upgrade upgrade)
+    public void BuyUpgrade(UpgradeEntity upgrade)
     {
-        if (state.CanAfford(upgrade.Cost))
+        if (state.CanAfford(upgrade.BuyCost))
         {
             state.UnlockUpgrade(upgrade);
         }
@@ -88,7 +88,7 @@ public sealed class GameManager
         }
     }
 
-    public List<Upgrade> OwnedUpgrades
+    public List<UpgradeEntity> OwnedUpgrades
     {
         get
         {
@@ -96,7 +96,7 @@ public sealed class GameManager
         }
     }
 
-    public List<Upgrade> AvailableUpgrades
+    public List<UpgradeEntity> AvailableUpgrades
     {
         get
         {
@@ -104,9 +104,9 @@ public sealed class GameManager
         }
     }
 
-    public bool CanAfford(Upgrade upgrade)
+    public bool CanAfford(UpgradeEntity upgrade)
     {
-        return state.CanAfford(upgrade.Cost);
+        return state.CanAfford(upgrade.BuyCost);
     }
 
     // Singleton boilerplate

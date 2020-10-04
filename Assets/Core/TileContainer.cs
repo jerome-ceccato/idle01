@@ -4,11 +4,11 @@ public sealed class TileContainer
 {
     public TerrainEntity terrain;
     // nullable
-    public GrowableGroup growable;
+    public GrowableIncarnation growable;
     // nullable
-    public BuildingEntity building;
+    public BuildingIncarnation building;
 
-    public TileContainer(TerrainEntity terrain, GrowableGroup growable, BuildingEntity building)
+    public TileContainer(TerrainEntity terrain, GrowableIncarnation growable, BuildingIncarnation building)
     {
         this.terrain = terrain;
         this.growable = growable;

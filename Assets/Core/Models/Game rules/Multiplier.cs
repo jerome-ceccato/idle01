@@ -1,8 +1,35 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Numerics;
+﻿using System.Numerics;
 
-public class Multiplier
+public interface Multiplier
+{
+    BigInteger Apply(BigInteger input);
+}
+
+public class MultiplierIdentity : Multiplier
+{
+    public BigInteger Apply(BigInteger input)
+    {
+        return input;
+    }
+}
+
+public class MultiplierBaseValue : Multiplier
+{
+    private BigInteger value;
+
+    public MultiplierBaseValue(BigInteger value)
+    {
+        this.value = value;
+    }
+
+    public BigInteger Apply(BigInteger input)
+    {
+        return input + value;
+    }
+}
+
+/*
+public class Multiplier2
 {
     private static int precision = 1024;
 
@@ -35,3 +62,4 @@ public class Multiplier
         return BigInteger.Divide(BigInteger.Multiply(BigInteger.Add(input, baseGrowth), truncatedGrowth), precision);
     }
 }
+*/

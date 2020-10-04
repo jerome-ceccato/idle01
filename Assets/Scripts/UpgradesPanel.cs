@@ -14,18 +14,18 @@ public class UpgradesPanel : MonoBehaviour
 
     void OnGUI()
     {
-        List<Upgrade> upgrades = GameManager.Instance.AvailableUpgrades;
+        List<UpgradeEntity> upgrades = GameManager.Instance.AvailableUpgrades;
 
         listBuilder.UpdateNumberOfEntries(upgrades.Count);
         for (int i = 0; i < upgrades.Count; i++)
         {
             GameObject entry = listBuilder.Entries[i];
-            Upgrade upgrade = upgrades[i];
+            UpgradeEntity upgrade = upgrades[i];
             Text textField = entry.GetComponentInChildren<Text>();
             Button button = entry.GetComponentInChildren<Button>();
 
-            string costAsString = string.Join(", ", upgrade.Cost.Resources.Select(r => $"{r.Item2} {r.Item1.DisplayName}"));
-            textField.text = $"{upgrade.Entity.DisplayName}: {costAsString}";
+            string costAsString = string.Join(", ", upgrade.BuyCost.Resources.Select(r => $"{r.Amount} {r.Resource.DisplayName}"));
+            textField.text = $"{upgrade.DisplayName}: {costAsString}";
 
             bool canBuy = GameManager.Instance.CanAfford(upgrade);
             button.GetComponent<BuyButton>().SetEnabled(canBuy);
