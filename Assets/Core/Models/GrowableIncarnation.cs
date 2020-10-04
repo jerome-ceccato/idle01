@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Incarnation of a growable: a growable in the world, with its own mutable data
 public class GrowableIncarnation
 {
     public GrowableEntity Entity { get; private set; }

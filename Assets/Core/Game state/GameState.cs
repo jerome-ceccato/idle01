@@ -37,12 +37,17 @@ public sealed class GameState
         resources[resource] = BigInteger.Add(owned, amount);
     }
 
+    public bool CanAfford(Generator generator)
+    {
+        return resources.ContainsKey(generator.Resource) && resources[generator.Resource] >= generator.Amount;
+    }
+
     public bool CanAfford(BaseCost cost)
     {
         // TODO: Missing multipliers
         foreach (Generator item in cost.Resources)
         {
-            if (!resources.ContainsKey(item.Resource) || resources[item.Resource] < item.Amount)
+            if (!CanAfford(item))
             {
                 return false;
             }
@@ -60,5 +65,27 @@ public sealed class GameState
 
         unlockedUpgrades.Remove(upgrade);
         ownedUpgrades.Add(upgrade);
+    }
+
+    public bool Generate(BuildingEntity building)
+    {
+        // TODO: Missing multipliers
+        foreach (Generator costs in building.Consumed)
+        {
+            if (!CanAfford(costs))
+            {
+                return false;
+            }
+        }
+
+        foreach (Generator costs in building.Consumed)
+        {
+            AddResource(costs.Resource, -costs.Amount);
+        }
+        foreach (Generator generated in building.Generated)
+        {
+            AddResource(generated.Resource, generated.Amount);
+        }
+        return true;
     }
 }

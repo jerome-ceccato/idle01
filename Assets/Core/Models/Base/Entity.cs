@@ -1,6 +1,7 @@
 ﻿using System;
 
-// An immutable identifiable entity
+// An immutable game entity
+// These are direct representation of the game's data, and not the player's current game state
 public abstract class Entity : Identifiable, Displayable
 {
     public string Id { get; private set; }

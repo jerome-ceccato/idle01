@@ -23,7 +23,7 @@ public sealed class GameManager
             {
                 TerrainEntity terrain = (x == 1 && y == 1) ? Terrains.grass : Terrains.dirt;
                 GrowableIncarnation growable = (x == 1 && y == 1) ? Growables.CreateWheat() : null;
-                BuildingIncarnation building = null;
+                BuildingIncarnation building = (x == 1 && y == 1) ? Buildings.CreateFarmer() : null;
                 state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
             }
         }
@@ -37,6 +37,13 @@ public sealed class GameManager
             if (tile.growable != null)
             {
                 tile.growable.Grow();
+            }
+            if (tile.building != null)
+            {
+                if (tile.building.Ticker.MakeTick(1))
+                {
+                    state.Generate(tile.building.Entity);
+                }
             }
         }
     }

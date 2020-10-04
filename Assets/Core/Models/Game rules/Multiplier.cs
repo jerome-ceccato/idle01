@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 
+// An object that can alter a number depending on a set of rules
 public interface Multiplier
 {
     BigInteger Apply(BigInteger input);
