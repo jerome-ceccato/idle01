@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DragCamera : MonoBehaviour
 {
-    private int convertionRate = 280;
+    private float convertionRate = 300;
     private bool dragging;
     private Vector3 previousMousePosition;
 
@@ -23,7 +23,9 @@ public class DragCamera : MonoBehaviour
         if (dragging)
         {
             Vector3 currentPosition = Input.mousePosition;
-            transform.Translate((previousMousePosition - currentPosition) / convertionRate);
+            float speed = convertionRate / Camera.main.orthographicSize;
+
+            transform.Translate((previousMousePosition - currentPosition) / speed);
             previousMousePosition = currentPosition;
         }
     }
