@@ -15,6 +15,13 @@ public sealed class GameState
     public List<UpgradeEntity> unlockedUpgrades;
     public List<UpgradeEntity> otherUpgrades;
 
+    private List<Vector2Int> adjacentTileOffsets = new List<Vector2Int> {
+            new Vector2Int(0, 1),
+            new Vector2Int(1, 0),
+            new Vector2Int(0, -1),
+            new Vector2Int(-1, 0),
+    };
+
     public GameState()
     {
         resources = new Dictionary<ResourceEntity, BigInteger>();
@@ -102,5 +109,17 @@ public sealed class GameState
             AddResource(generated.Resource, generated.Amount);
         }
         return true;
+    }
+
+    public bool HasAdjacentTile(Vector2Int tilePosition)
+    {
+        foreach (Vector2Int offset in adjacentTileOffsets)
+        {
+            if (world.ContainsKey(tilePosition + offset))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

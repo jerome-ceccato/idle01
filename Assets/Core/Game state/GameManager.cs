@@ -165,6 +165,11 @@ public sealed class GameManager
         return state.CanAfford(building.BuildCost);
     }
 
+    public bool CanPurchaseTileAtPosition(Vector2Int position)
+    {
+        return !state.world.ContainsKey(position) && state.HasAdjacentTile(position);
+    }
+
     // Singleton boilerplate
 
     private static readonly object padlock = new object();

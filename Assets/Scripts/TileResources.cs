@@ -4,6 +4,8 @@ using UnityEngine.Tilemaps;
 
 public class TileResources: MonoBehaviour
 {
+    public Tile tileOutline;
+
     public Tile template;
     private Dictionary<string, Tile> cache = new Dictionary<string, Tile>();
     

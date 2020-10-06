@@ -28,6 +28,16 @@ public class Map : MonoBehaviour
     {
         // TODO: caching
         allTilemaps.ForEach(t => t.ClearAllTiles());
+
+        if (UIManager.Instance.HoverPosition != null)
+        {
+            Vector2Int position = (Vector2Int)UIManager.Instance.HoverPosition;
+            if (GameManager.Instance.CanPurchaseTileAtPosition(position))
+            {
+                terrainTilemap.SetTile(position.To3D(), tileResources.tileOutline);
+            }
+        }
+
         foreach (var item in level)
         {
             Vector3Int position = item.Key.To3D();
@@ -36,6 +46,30 @@ public class Map : MonoBehaviour
             LoadTile(position, tile);
         }
         allTilemaps.ForEach(t => t.RefreshAllTiles());
+    }
+
+    private bool CanPurchaseTile(Dictionary<Vector2Int, TileContainer> level, Vector2Int position)
+    {
+        if (level.ContainsKey(position))
+        {
+            return false;
+        }
+
+        List<Vector2Int> possibleOffsets = new List<Vector2Int> {
+            new Vector2Int(0, 1),
+            new Vector2Int(1, 0),
+            new Vector2Int(0, -1),
+            new Vector2Int(-1, 0),
+        };
+
+        foreach (Vector2Int offset in possibleOffsets)
+        {
+            if (level.ContainsKey(position + offset))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void LoadTile(Vector3Int position, TileContainer tile)
