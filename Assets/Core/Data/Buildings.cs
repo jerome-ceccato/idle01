@@ -16,6 +16,13 @@ public class Buildings
         new BuildRule(null, farmer),
         new Frequency("farmer_frequency", 20, 10));
 
+    public static BuildingEntity farm = new BuildingEntity("farm", "Small farm", "A small wheat farm",
+        new BaseCost(new Generator("farm_wheat", Resources.wheat, 100)),
+        new BuildingEffectGenerator(new Generator("farm_wheat_gen", Resources.wheat, 1)),
+        new UnlockRule(),
+        new BuildRule(null, farmerOld),
+        new Frequency("farm_frequency", 10, 0));
+
     public static BuildingIncarnation CreateFarmer()
     {
         return new BuildingIncarnation(farmer);

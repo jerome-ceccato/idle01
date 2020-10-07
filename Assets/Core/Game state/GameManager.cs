@@ -27,6 +27,8 @@ public sealed class GameManager
                 state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
             }
         }
+
+        state.AddResource(Resources.wheat, 1000);
     }
 
     public void Tick() 

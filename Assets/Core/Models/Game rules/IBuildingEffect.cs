@@ -15,6 +15,15 @@ public class BuildingEffectGenerator : IBuildingEffect
         Generated = generated;
         Consumed = consumed;
     }
+
+    public BuildingEffectGenerator(Generator generated)
+    {
+        Generated = new List<Generator>
+        {
+            generated,
+        };
+        Consumed = new List<Generator>();
+    }
 }
 
 public class BuildingEffectHarvester : IBuildingEffect

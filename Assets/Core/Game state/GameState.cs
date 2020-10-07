@@ -35,6 +35,7 @@ public sealed class GameState
         {
             Buildings.farmer,
             Buildings.farmerOld,
+            Buildings.farm,
         };
         otherBuildings = new List<BuildingEntity>();
 
@@ -98,6 +99,10 @@ public sealed class GameState
         Buy(building.BuildCost);
 
         tileContainer.building = new BuildingIncarnation(building);
+        if (!(building.Effect is BuildingEffectHarvester))
+        {
+            tileContainer.growable = null;
+        }
     }
 
     public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
