@@ -22,7 +22,7 @@ public sealed class GameManager
             for (int y = 0; y < 2; y++)
             {
                 TerrainEntity terrain = (x == y) ? Terrains.grass : Terrains.dirt;
-                GrowableIncarnation growable = (x == y) ? Growables.CreateWheat() : null;
+                GrowableIncarnation growable = terrain.Growable != null ? new GrowableIncarnation(terrain.Growable) : null;
                 BuildingIncarnation building = null;
                 state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
             }
@@ -90,6 +90,13 @@ public sealed class GameManager
             state.Build(building, tileContainer);
         }
     }
+    public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
+    {
+        if (state.CanAfford(terrainUpgrade.BuildCost))
+        {
+            state.Build(terrainUpgrade, tileContainer);
+        }
+    }
 
     public TileContainer TileContainerAtPosition(Vector2Int position)
     {
@@ -141,6 +148,11 @@ public sealed class GameManager
         return AvailableBuildings.FindAll(building => CanBuildOnTile(tile, building));
     }
 
+    public List<TerrainUpgradeEntity> AvailableTerrainUpgradesForTile(TileContainer tile)
+    {
+        return state.unlockedTerrainUpgrades.FindAll(upgrade => CanUpgradeTerrainOnTile(tile, upgrade));
+    }
+
     private bool CanBuildOnTile(TileContainer tile, BuildingEntity entity)
     {
         if (entity.BuildRule.PreviousBuilding != null)
@@ -155,6 +167,11 @@ public sealed class GameManager
         return entity.BuildRule.PossibleTerrains == null || entity.BuildRule.PossibleTerrains.Contains(tile.terrain);       
     }
 
+    private bool CanUpgradeTerrainOnTile(TileContainer tile, TerrainUpgradeEntity entity)
+    {
+        return tile.building == null && entity.Target == tile.terrain;
+    }
+
     public bool CanAfford(UpgradeEntity upgrade)
     {
         return state.CanAfford(upgrade.BuyCost);
@@ -163,6 +180,11 @@ public sealed class GameManager
     public bool CanAfford(BuildingEntity building)
     {
         return state.CanAfford(building.BuildCost);
+    }
+
+    public bool CanAfford(TerrainUpgradeEntity terrainUpgrade)
+    {
+        return state.CanAfford(terrainUpgrade.BuildCost);
     }
 
     public bool CanPurchaseTileAtPosition(Vector2Int position)

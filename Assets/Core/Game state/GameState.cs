@@ -11,9 +11,13 @@ public sealed class GameState
     public List<BuildingEntity> unlockedBuildings;
     public List<BuildingEntity> otherBuildings;
 
+    public List<TerrainUpgradeEntity> unlockedTerrainUpgrades;
+    public List<TerrainUpgradeEntity> otherTerrainUpgrades;
+
     public List<UpgradeEntity> ownedUpgrades;
     public List<UpgradeEntity> unlockedUpgrades;
     public List<UpgradeEntity> otherUpgrades;
+
 
     private List<Vector2Int> adjacentTileOffsets = new List<Vector2Int> {
             new Vector2Int(0, 1),
@@ -40,6 +44,12 @@ public sealed class GameState
             Upgrades.basicFertilizer,
         };
         otherUpgrades = new List<UpgradeEntity>();
+
+        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>
+        {
+            Upgrades.dirtToGrass,
+        };
+        otherTerrainUpgrades = new List<TerrainUpgradeEntity>();
     }
 
     public void AddResource(ResourceEntity resource, BigInteger amount)
@@ -66,13 +76,18 @@ public sealed class GameState
         return true;
     }
 
-    public void UnlockUpgrade(UpgradeEntity upgrade)
+    private void Buy(BaseCost cost)
     {
         // TODO: Missing multipliers
-        foreach (Generator item in upgrade.BuyCost.Resources)
+        foreach (Generator item in cost.Resources)
         {
             resources[item.Resource] -= item.Amount;
         }
+    }
+
+    public void UnlockUpgrade(UpgradeEntity upgrade)
+    {
+        Buy(upgrade.BuyCost);
 
         unlockedUpgrades.Remove(upgrade);
         ownedUpgrades.Add(upgrade);
@@ -80,13 +95,17 @@ public sealed class GameState
 
     public void Build(BuildingEntity building, TileContainer tileContainer)
     {
-        // TODO: Missing multipliers
-        foreach (Generator item in building.BuildCost.Resources)
-        {
-            resources[item.Resource] -= item.Amount;
-        }
+        Buy(building.BuildCost);
 
         tileContainer.building = new BuildingIncarnation(building);
+    }
+
+    public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
+    {
+        Buy(terrainUpgrade.BuildCost);
+
+        tileContainer.terrain = terrainUpgrade.Replacement;
+        tileContainer.growable = terrainUpgrade.Replacement.Growable != null ? new GrowableIncarnation(terrainUpgrade.Replacement.Growable) : null;
     }
 
     public bool Generate(BuildingEffectGenerator building)
