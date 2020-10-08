@@ -3,16 +3,9 @@
 // An identifiable object representing a resource with an amount
 public class Generator : IIdentifiable
 {
-    public string Id { get; private set; }
+    public string Id { get; set; }
 
-    public ResourceEntity Resource { get; private set; }
+    public LazyEntity<ResourceEntity> Resource { get; set; }
 
-    public BigInteger Amount { get; private set; }
-
-    public Generator(string id, ResourceEntity resource, BigInteger amount)
-    {
-        Id = id;
-        Resource = resource;
-        Amount = amount;
-    }
+    public BigInteger Amount { get; set; }
 }

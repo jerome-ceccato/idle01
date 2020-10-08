@@ -16,7 +16,7 @@ public class GameRules
     {
         foreach (UpgradeEntity upgrade in gameState.ownedUpgrades)
         {
-            if (upgrade.Effect.Target == growable.Entity)
+            if (upgrade.Effect.Target.Entity == growable.Entity)
             {
                 return upgrade.Effect.Multiplier;
             }

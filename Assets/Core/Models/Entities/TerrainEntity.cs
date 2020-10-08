@@ -1,11 +1,6 @@
-﻿using System;
-public class TerrainEntity : Entity
+﻿public class TerrainEntity : Entity
 {
-    public GrowableEntity Growable { get; private set; }
+    public LazyEntity<GrowableEntity> Growable { get; set; }
 
-    public TerrainEntity(string id, string displayName, string flavorText, GrowableEntity growable)
-        : base("Terrain/" + id, displayName, flavorText)
-    {
-        Growable = growable;
-    }
+    protected override string SpritePrefix => "Terrain/";
 }

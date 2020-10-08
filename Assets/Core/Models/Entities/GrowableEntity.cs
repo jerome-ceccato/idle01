@@ -2,26 +2,17 @@
 
 public sealed class GrowableEntity : Entity
 {
-    public class Stage : IDisplayable
+    public sealed class Stage : IDisplayable
     {
-        public string SpriteId { get; private set; }
-        public Frequency GrowthFrequency { get; private set; }
+        public string Id { get; set; }
+        public Frequency GrowthFrequency { get; set; }
 
-        public Stage(string id, Frequency growthFrequency)
-        {
-            SpriteId = "Growable/" + id;
-            GrowthFrequency = growthFrequency;
-        }
+        public string SpriteId => "Growable/";
     }
         
-    public List<Stage> Stages { get; private set; }
+    public List<Stage> Stages { get; set; }
     
-    public Generator GrownResource { get; private set; }
+    public Generator GrownResource { get; set; }
 
-    public GrowableEntity(string id, string displayName, string flavorText, Generator grownResource, List<Stage> stages)
-        : base("Growable/" + id, displayName, flavorText)
-    {
-        Stages = stages;
-        GrownResource = grownResource;
-    }
+    protected override string SpritePrefix => "Growable/";
 }

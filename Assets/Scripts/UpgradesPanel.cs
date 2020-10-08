@@ -24,7 +24,7 @@ public class UpgradesPanel : MonoBehaviour
             Text textField = entry.GetComponentInChildren<Text>();
             Button button = entry.GetComponentInChildren<Button>();
 
-            string costAsString = string.Join(", ", upgrade.BuyCost.Resources.Select(r => $"{r.Amount} {r.Resource.DisplayName}"));
+            string costAsString = string.Join(", ", upgrade.BuyCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.DisplayName}"));
             textField.text = $"{upgrade.DisplayName}: {costAsString}";
 
             bool canBuy = GameManager.Instance.CanAfford(upgrade);

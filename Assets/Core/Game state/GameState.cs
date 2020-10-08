@@ -31,25 +31,14 @@ public sealed class GameState
         resources = new Dictionary<ResourceEntity, BigInteger>();
         world = new Dictionary<Vector2Int, TileContainer>();
 
-        unlockedBuildings = new List<BuildingEntity>()
-        {
-            Buildings.farmer,
-            Buildings.farmerOld,
-            Buildings.farm,
-        };
+        unlockedBuildings = new List<BuildingEntity>();
         otherBuildings = new List<BuildingEntity>();
 
         ownedUpgrades = new List<UpgradeEntity>();
-        unlockedUpgrades = new List<UpgradeEntity>
-        {
-            Upgrades.basicFertilizer,
-        };
+        unlockedUpgrades = new List<UpgradeEntity>();
         otherUpgrades = new List<UpgradeEntity>();
 
-        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>
-        {
-            Upgrades.dirtToGrass,
-        };
+        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>();
         otherTerrainUpgrades = new List<TerrainUpgradeEntity>();
     }
 
@@ -61,7 +50,7 @@ public sealed class GameState
 
     public bool CanAfford(Generator generator)
     {
-        return resources.ContainsKey(generator.Resource) && resources[generator.Resource] >= generator.Amount;
+        return resources.ContainsKey(generator.Resource.Entity) && resources[generator.Resource.Entity] >= generator.Amount;
     }
 
     public bool CanAfford(BaseCost cost)
@@ -82,7 +71,7 @@ public sealed class GameState
         // TODO: Missing multipliers
         foreach (Generator item in cost.Resources)
         {
-            resources[item.Resource] -= item.Amount;
+            resources[item.Resource.Entity] -= item.Amount;
         }
     }
 
@@ -109,8 +98,8 @@ public sealed class GameState
     {
         Buy(terrainUpgrade.BuildCost);
 
-        tileContainer.terrain = terrainUpgrade.Replacement;
-        tileContainer.growable = terrainUpgrade.Replacement.Growable != null ? new GrowableIncarnation(terrainUpgrade.Replacement.Growable) : null;
+        tileContainer.terrain = terrainUpgrade.Replacement.Entity;
+        tileContainer.growable = terrainUpgrade.Replacement.Entity.Growable != null ? new GrowableIncarnation(terrainUpgrade.Replacement.Entity.Growable.Entity) : null;
     }
 
     public bool Generate(BuildingEffectGenerator building)
@@ -126,11 +115,11 @@ public sealed class GameState
 
         foreach (Generator costs in building.Consumed)
         {
-            AddResource(costs.Resource, -costs.Amount);
+            AddResource(costs.Resource.Entity, -costs.Amount);
         }
         foreach (Generator generated in building.Generated)
         {
-            AddResource(generated.Resource, generated.Amount);
+            AddResource(generated.Resource.Entity, generated.Amount);
         }
         return true;
     }

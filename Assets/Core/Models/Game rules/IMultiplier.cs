@@ -16,16 +16,11 @@ public class MultiplierIdentity : IMultiplier
 
 public class MultiplierBaseValue : IMultiplier
 {
-    private BigInteger value;
-
-    public MultiplierBaseValue(BigInteger value)
-    {
-        this.value = value;
-    }
+    public BigInteger Value { get; set; }
 
     public BigInteger Apply(BigInteger input)
     {
-        return input + value;
+        return input + Value;
     }
 }
 

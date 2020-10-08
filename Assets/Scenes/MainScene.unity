@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4f77dc123839348afe0e110abadf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourcesFile: {fileID: 4900000, guid: f78e0b27d24cd0a4f878d0436cabe7d9, type: 3}
 --- !u!4 &56694459
 Transform:
   m_ObjectHideFlags: 0
@@ -656,7 +657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b2c97a6892e408c9c167b2ac7f89ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileOutline: {fileID: 11400000, guid: 1b81de7be4bbc87478bdff2219674ba8, type: 2}
+  tileOutline: {fileID: 0}
   template: {fileID: 11400000, guid: 131375a8c9f944732a55b9d65cb93489, type: 2}
 --- !u!114 &487902314
 MonoBehaviour:

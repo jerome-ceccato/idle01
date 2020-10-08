@@ -17,18 +17,19 @@ public sealed class GameManager
 
     public void Start() 
     {
+        DataStore store = DataStore.Shared;
         for (int x = 0; x < 2; x++)
         {
             for (int y = 0; y < 2; y++)
             {
-                TerrainEntity terrain = (x == y) ? Terrains.grass : Terrains.dirt;
-                GrowableIncarnation growable = terrain.Growable != null ? new GrowableIncarnation(terrain.Growable) : null;
+                TerrainEntity terrain = store.Get<TerrainEntity>((x == y) ? "grass" : "dirt");
+                GrowableIncarnation growable = terrain.Growable != null ? new GrowableIncarnation(terrain.Growable.Entity) : null;
                 BuildingIncarnation building = null;
                 state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
             }
         }
 
-        state.AddResource(Resources.wheat, 1000);
+        state.AddResource(store.Get<ResourceEntity>("wheat"), 1000);
     }
 
     public void Tick() 
@@ -72,7 +73,7 @@ public sealed class GameManager
         {
             IMultiplier multiplier = rules.MultiplierForGrowable(growable);
             BigInteger amount = multiplier.Apply(growable.Entity.GrownResource.Amount);
-            state.AddResource(growable.Entity.GrownResource.Resource, amount);
+            state.AddResource(growable.Entity.GrownResource.Resource.Entity, amount);
             growable.Reset();
         }
     }
@@ -159,7 +160,7 @@ public sealed class GameManager
     {
         if (entity.BuildRule.PreviousBuilding != null)
         {
-            return entity.BuildRule.PreviousBuilding == tile.building?.Entity;
+            return entity.BuildRule.PreviousBuilding.Entity == tile.building?.Entity;
         }
         else if (tile.building != null)
         {
@@ -171,7 +172,7 @@ public sealed class GameManager
 
     private bool CanUpgradeTerrainOnTile(TileContainer tile, TerrainUpgradeEntity entity)
     {
-        return tile.building == null && entity.Target == tile.terrain;
+        return tile.building == null && entity.Target.Entity == tile.terrain;
     }
 
     public bool CanAfford(UpgradeEntity upgrade)

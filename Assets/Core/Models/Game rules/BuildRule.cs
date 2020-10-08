@@ -3,12 +3,6 @@
 // Requirements to place a building
 public class BuildRule
 {
-    public List<TerrainEntity> PossibleTerrains { get; private set; }
-    public BuildingEntity PreviousBuilding { get; private set; }
-
-    public BuildRule(List<TerrainEntity> possibleTerrains, BuildingEntity previousBuilding)
-    {
-        PossibleTerrains = possibleTerrains;
-        PreviousBuilding = previousBuilding;
-    }
+    public List<TerrainEntity> PossibleTerrains { get; set; }
+    public LazyEntity<BuildingEntity> PreviousBuilding { get; set; }
 }

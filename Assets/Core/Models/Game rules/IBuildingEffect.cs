@@ -7,23 +7,8 @@ public interface IBuildingEffect
 
 public class BuildingEffectGenerator : IBuildingEffect
 {
-    public List<Generator> Generated { get; private set; }
-    public List<Generator> Consumed { get; private set; }
-
-    public BuildingEffectGenerator(List<Generator> generated, List<Generator> consumed)
-    {
-        Generated = generated;
-        Consumed = consumed;
-    }
-
-    public BuildingEffectGenerator(Generator generated)
-    {
-        Generated = new List<Generator>
-        {
-            generated,
-        };
-        Consumed = new List<Generator>();
-    }
+    public List<Generator> Generated { get; set; }
+    public List<Generator> Consumed { get; set; }
 }
 
 public class BuildingEffectHarvester : IBuildingEffect
