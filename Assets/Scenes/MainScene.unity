@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56694459}
   - component: {fileID: 56694458}
+  - component: {fileID: 56694460}
   m_Layer: 0
   m_Name: Loader
   m_TagString: GameController
@@ -152,7 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4f77dc123839348afe0e110abadf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcesFile: {fileID: 4900000, guid: f78e0b27d24cd0a4f878d0436cabe7d9, type: 3}
 --- !u!4 &56694459
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +167,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &56694460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56694457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15306792b055c413b897c5f52da92a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resources: {fileID: 4900000, guid: f78e0b27d24cd0a4f878d0436cabe7d9, type: 3}
+  terrains: {fileID: 4900000, guid: 1fe7e642d1ae844709259be1fc9ba4bc, type: 3}
+  buildings: {fileID: 4900000, guid: 61f0778166982416ea08a13e2490d027, type: 3}
+  upgrades: {fileID: 4900000, guid: 6eaa6ad989458455f8fbab34f4c0d099, type: 3}
+  terrainUpgrades: {fileID: 4900000, guid: fc50865dd82a94b508e034049be6b6fd, type: 3}
+  growables: {fileID: 4900000, guid: 449a4f85e055a4460b3038dfcf3efb25, type: 3}
 --- !u!1 &131849073
 GameObject:
   m_ObjectHideFlags: 0

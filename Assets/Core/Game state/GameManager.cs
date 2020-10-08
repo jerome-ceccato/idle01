@@ -167,7 +167,7 @@ public sealed class GameManager
             return false;
         }
 
-        return entity.BuildRule.PossibleTerrains == null || entity.BuildRule.PossibleTerrains.Contains(tile.terrain);       
+        return entity.BuildRule.PossibleTerrains == null || entity.BuildRule.PossibleTerrains.Contains(tile.terrain.Id);       
     }
 
     private bool CanUpgradeTerrainOnTile(TileContainer tile, TerrainUpgradeEntity entity)

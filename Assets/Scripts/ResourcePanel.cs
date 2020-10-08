@@ -19,7 +19,7 @@ public class ResourcePanel : MonoBehaviour
 
         string content = string.Join(", ", ownedResources.Select((item) =>
         {
-            return $"{item.Key.DisplayName}: {item.Value}";
+            return $"{item.Key.Name}: {item.Value}";
         }));
 
         contentText.text = content;

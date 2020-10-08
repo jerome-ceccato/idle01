@@ -6,15 +6,17 @@ using YamlDotNet.Serialization.NamingConventions;
 public class DataLoader
 {
     private IDeserializer deserializer;
-    public DataLoader(string resources)
+
+    public DataLoader()
     {
         deserializer = new DeserializerBuilder()
             .WithNamingConvention(new CamelCaseNamingConvention())
             .WithAttributeOverride<ResourceEntity>(x => x.SpriteId, new YamlIgnoreAttribute())
             .Build();
-
-        var content = deserializer.Deserialize<List<ResourceEntity>>(resources);
-        Debug.Log(content);
     }
 
+    public List<T> Load<T>(TextAsset asset) where T : Entity
+    {
+        return deserializer.Deserialize<List<T>>(asset.text);
+    }
 }

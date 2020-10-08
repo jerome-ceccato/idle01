@@ -25,12 +25,12 @@ public class CurrentTilePanel : MonoBehaviour
             case UIState.Value.TileSelected:
                 currentTileInformation.text = $"Selected at {state.tilePosition}";
 
-                terrainInformation.text = $"{state.tileContainer.terrain.DisplayName}: {state.tileContainer.terrain.FlavorText}";
+                terrainInformation.text = $"{state.tileContainer.terrain.Name}: {state.tileContainer.terrain.FlavorText}";
                 terrainInformation.enabled = true;
 
                 if (state.tileContainer.growable != null && state.tileContainer.growable.CanCollect())
                 {
-                    growableInformation.text = $"Contains {state.tileContainer.growable.Entity.DisplayName}";
+                    growableInformation.text = $"Contains {state.tileContainer.growable.Entity.Name}";
                     growableInformation.enabled = true;
                 }
                 else
@@ -40,7 +40,7 @@ public class CurrentTilePanel : MonoBehaviour
 
                 if (state.tileContainer.building != null)
                 {
-                    buildingNameInformation.text = $"Built: {state.tileContainer.building.Entity.DisplayName}";
+                    buildingNameInformation.text = $"Built: {state.tileContainer.building.Entity.Name}";
                     buildingDescriptionInformation.text = state.tileContainer.building.Entity.FlavorText;
                     buildingNameInformation.enabled = true;
                     buildingDescriptionInformation.enabled = true;

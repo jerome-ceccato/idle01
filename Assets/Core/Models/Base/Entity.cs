@@ -14,7 +14,7 @@ public abstract class Entity : IIdentifiable, IDisplayable
         }
     }
 
-    public string DisplayName { get; set; }
+    public string Name { get; set; }
     public string FlavorText { get; set; }
 
     protected abstract string SpritePrefix { get; }

@@ -1,0 +1,8 @@
+- id: dirtTile
+  name: Dirt
+  flavorText: A field of dirt
+
+- id: grassTile
+  name: Grass
+  flavorText: A field of grass
+  growable: wheat

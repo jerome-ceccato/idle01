@@ -35,8 +35,8 @@ public class BuildingsPanel : MonoBehaviour
 
                 if (allEntities[i] is BuildingEntity building)
                 {
-                    string costAsString = string.Join(", ", building.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.DisplayName}"));
-                    textField.text = $"{building.DisplayName}: {costAsString}";
+                    string costAsString = string.Join(", ", building.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
+                    textField.text = $"{building.Name}: {costAsString}";
 
                     bool canBuy = GameManager.Instance.CanAfford(building);
                     button.GetComponent<BuyButton>().SetEnabled(canBuy);
@@ -45,8 +45,8 @@ public class BuildingsPanel : MonoBehaviour
                 }
                 else if (allEntities[i] is TerrainUpgradeEntity terrainUpgrade)
                 {
-                    string costAsString = string.Join(", ", terrainUpgrade.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.DisplayName}"));
-                    textField.text = $"{terrainUpgrade.DisplayName}: {costAsString}";
+                    string costAsString = string.Join(", ", terrainUpgrade.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
+                    textField.text = $"{terrainUpgrade.Name}: {costAsString}";
 
                     bool canBuy = GameManager.Instance.CanAfford(terrainUpgrade);
                     button.GetComponent<BuyButton>().SetEnabled(canBuy);

@@ -1,0 +1,56 @@
+- id: farmer
+  name: Farmer
+  flavorText: Just a farmer trying to earn his bread. He collects wheat, sometimes
+  buildCost:
+    - id: farmer_cost_wheat
+      resource: wheat
+      amount: 10
+  effect: !BuildingEffectHarvester
+  effectFrequency:
+    id: farmer_frequency
+    ticks: 100
+    variance: 20
+  unlockRule:
+  buildRule:
+    possibleTerrains:
+      - grassTile
+    previousBuilding: null
+
+- id: farmer_old
+  name: Old farmer
+  flavorText: An old farmer that knows how it's done. Faster than the youth
+  buildCost:
+    - id: farmer2_cost_wheat
+      resource: wheat
+      amount: 20
+  effect: !BuildingEffectHarvester
+  effectFrequency:
+    id: farmer_frequency
+    ticks: 20
+    variance: 10
+  unlockRule:
+  buildRule:
+    possibleTerrains: null
+    previousBuilding: farmer
+
+- id: farm
+  name: Small farm
+  flavorText: A small wheat farm
+  buildCost:
+    - id: farm_cost_wheat
+      resource: wheat
+      amount: 100
+  effect: !BuildingEffectGenerator
+    generated:
+      - id: farm_gen_wheat
+        resource: wheat
+        amount: 1
+    consumed:
+  effectFrequency:
+    id: farm_frequency
+    ticks: 10
+    variance: 0
+  unlockRule:
+  buildRule:
+    possibleTerrains: null
+    previousBuilding: farmer_old

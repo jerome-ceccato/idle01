@@ -1,0 +1,18 @@
+- id: wheatGrowable
+  name: Wheat
+  flavorText: Wheat is growing here
+  grownResource:
+    id: growable_wheat
+    resource: wheat
+    amount: 1
+  stages:
+    - id: wheat1
+      frequency:
+        id: wheat1_freq
+        ticks: 25
+        variance: 20
+    - id: wheat2
+      frequency:
+        id: wheat2_freq
+        ticks: 25
+        variance: 20

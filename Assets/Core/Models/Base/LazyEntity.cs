@@ -21,5 +21,9 @@ public class LazyEntity<T> where T : Entity
             return cache;
         }
     }
-}
 
+    public static implicit operator LazyEntity<T>(string rhs)
+    {
+        return new LazyEntity<T>(rhs);
+    }
+}
