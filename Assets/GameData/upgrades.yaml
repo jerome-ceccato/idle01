@@ -2,11 +2,12 @@
   name: Basic fertilizer
   flavorText: It smells but it makes wheat grow faster
   buyCost:
-    - id: fertilizer1_cost_wheat
-      resource: wheat
-      amount: 5
+    resources:
+      - id: fertilizer1_cost_wheat
+        resource: wheat
+        amount: 5
   effect:
     target: wheatGrowable
     multiplier: !MultiplierBaseValue
       value: 1
-  unlockRule:
+  unlockRule: {}

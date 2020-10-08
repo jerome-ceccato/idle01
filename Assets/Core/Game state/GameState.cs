@@ -31,14 +31,14 @@ public sealed class GameState
         resources = new Dictionary<ResourceEntity, BigInteger>();
         world = new Dictionary<Vector2Int, TileContainer>();
 
-        unlockedBuildings = new List<BuildingEntity>();
+        unlockedBuildings = new List<BuildingEntity>(DataStore.Shared.Buildings);
         otherBuildings = new List<BuildingEntity>();
 
         ownedUpgrades = new List<UpgradeEntity>();
-        unlockedUpgrades = new List<UpgradeEntity>();
+        unlockedUpgrades = new List<UpgradeEntity>(DataStore.Shared.Upgrades);
         otherUpgrades = new List<UpgradeEntity>();
 
-        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>();
+        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>(DataStore.Shared.TerrainUpgrades);
         otherTerrainUpgrades = new List<TerrainUpgradeEntity>();
     }
 

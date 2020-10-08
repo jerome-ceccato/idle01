@@ -12,6 +12,10 @@ public class DataLoader
         deserializer = new DeserializerBuilder()
             .WithNamingConvention(new CamelCaseNamingConvention())
             .WithAttributeOverride<ResourceEntity>(x => x.SpriteId, new YamlIgnoreAttribute())
+            .WithTagMapping("!MultiplierBaseValue", typeof(MultiplierBaseValue))
+            .WithTagMapping("!BuildingEffectHarvester", typeof(BuildingEffectHarvester))
+            .WithTagMapping("!BuildingEffectGenerator", typeof(BuildingEffectGenerator))
+            .WithTagMapping("!UnlockRule", typeof(UnlockRule))
             .Build();
     }
 

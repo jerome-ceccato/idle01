@@ -7,7 +7,7 @@ public sealed class GrowableEntity : Entity
         public string Id { get; set; }
         public Frequency GrowthFrequency { get; set; }
 
-        public string SpriteId => "Growable/";
+        public string SpriteId => "Growable/" + Id;
     }
         
     public List<Stage> Stages { get; set; }

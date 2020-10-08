@@ -5,4 +5,4 @@
 - id: grassTile
   name: Grass
   flavorText: A field of grass
-  growable: wheat
+  growable: wheatGrowable

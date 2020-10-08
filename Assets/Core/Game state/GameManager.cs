@@ -15,14 +15,14 @@ public sealed class GameManager
         rules = new GameRules(state);
     }
 
-    public void Start() 
+    public void Start()
     {
         DataStore store = DataStore.Shared;
         for (int x = 0; x < 2; x++)
         {
             for (int y = 0; y < 2; y++)
             {
-                TerrainEntity terrain = store.Get<TerrainEntity>((x == y) ? "grass" : "dirt");
+                TerrainEntity terrain = store.Get<TerrainEntity>((x == y) ? "grassTile" : "dirtTile");
                 GrowableIncarnation growable = terrain.Growable != null ? new GrowableIncarnation(terrain.Growable.Entity) : null;
                 BuildingIncarnation building = null;
                 state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));

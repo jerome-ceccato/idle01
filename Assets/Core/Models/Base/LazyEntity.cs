@@ -26,4 +26,19 @@ public class LazyEntity<T> where T : Entity
     {
         return new LazyEntity<T>(rhs);
     }
+
+    public override bool Equals(object obj)
+    {
+        if (!(obj is LazyEntity<T> item))
+        {
+            return false;
+        }
+
+        return this.id.Equals(item.id);
+    }
+
+    public override int GetHashCode()
+    {
+        return this.id.GetHashCode();
+    }
 }

@@ -7,12 +7,12 @@
     amount: 1
   stages:
     - id: wheat1
-      frequency:
+      growthFrequency:
         id: wheat1_freq
         ticks: 25
         variance: 20
     - id: wheat2
-      frequency:
+      growthFrequency:
         id: wheat2_freq
         ticks: 25
         variance: 20
