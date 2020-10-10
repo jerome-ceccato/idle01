@@ -1,3 +1,11 @@
+- id: money
+  name: Money
+  flavorText: Money to pay things
+
 - id: wheat
   name: Wheat
   flavorText: It's just wheat
+
+- id: flour
+  name: Flour
+  flavorText: Wheat powder

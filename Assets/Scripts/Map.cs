@@ -48,30 +48,6 @@ public class Map : MonoBehaviour
         allTilemaps.ForEach(t => t.RefreshAllTiles());
     }
 
-    private bool CanPurchaseTile(Dictionary<Vector2Int, TileContainer> level, Vector2Int position)
-    {
-        if (level.ContainsKey(position))
-        {
-            return false;
-        }
-
-        List<Vector2Int> possibleOffsets = new List<Vector2Int> {
-            new Vector2Int(0, 1),
-            new Vector2Int(1, 0),
-            new Vector2Int(0, -1),
-            new Vector2Int(-1, 0),
-        };
-
-        foreach (Vector2Int offset in possibleOffsets)
-        {
-            if (level.ContainsKey(position + offset))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void LoadTile(Vector3Int position, TileContainer tile)
     {
         // Terrain
@@ -87,7 +63,11 @@ public class Map : MonoBehaviour
         }
 
         // Building
-        if (tile.building != null)
+        if (tile.specialEntity != null)
+        {
+            buildingsTilemap.SetTile(position, tileResources.TileForDisplayable(tile.specialEntity));
+        }
+        else if (tile.building != null)
         {
             buildingsTilemap.SetTile(position, tileResources.TileForDisplayable(tile.building.Entity));
         }

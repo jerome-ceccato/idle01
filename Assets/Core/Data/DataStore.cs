@@ -42,6 +42,21 @@ public class DataStore
         return (T)allEntities[id];
     }
 
+    // Specials
+
+    private HomeSpecialEntity home;
+    public HomeSpecialEntity Home
+    {
+        get
+        {
+            if (home == null)
+            {
+                home = new HomeSpecialEntity();
+            }
+            return home;
+        }
+    }
+
     // Singleton boilerplate
 
     private static readonly object padlock = new object();

@@ -18,17 +18,8 @@ public sealed class GameManager
     public void Start()
     {
         DataStore store = DataStore.Shared;
-        for (int x = 0; x < 2; x++)
-        {
-            for (int y = 0; y < 2; y++)
-            {
-                TerrainEntity terrain = store.Get<TerrainEntity>((x == y) ? "grassTile" : "dirtTile");
-                GrowableIncarnation growable = terrain.Growable != null ? new GrowableIncarnation(terrain.Growable.Entity) : null;
-                BuildingIncarnation building = null;
-                state.world.Add(new Vector2Int(x, y), new TileContainer(terrain, growable, building));
-            }
-        }
 
+        state.world = InitialData.InitialWorld(store);
         state.AddResource(store.Get<ResourceEntity>("wheat"), 1000);
     }
 
@@ -37,17 +28,21 @@ public sealed class GameManager
         // TODO: improve
         foreach (TileContainer tile in state.world.Values)
         {
-            if (tile.growable != null)
+            if (tile.specialEntity == null)
             {
-                tile.growable.Grow();
-            }
-            if (tile.building != null)
-            {
-                if (tile.building.Ticker.MakeTick(1))
+                if (tile.growable != null)
                 {
-                    TickBuilding(tile);
+                    tile.growable.Grow();
+                }
+                if (tile.building != null)
+                {
+                    if (tile.building.Ticker.MakeTick(1))
+                    {
+                        TickBuilding(tile);
+                    }
                 }
             }
+            
         }
     }
 
@@ -158,6 +153,11 @@ public sealed class GameManager
 
     private bool CanBuildOnTile(TileContainer tile, BuildingEntity entity)
     {
+        if (tile.specialEntity != null)
+        {
+            return false;
+        }
+
         if (entity.BuildRule.PreviousBuilding != null)
         {
             return entity.BuildRule.PreviousBuilding.Entity == tile.building?.Entity;
@@ -172,7 +172,7 @@ public sealed class GameManager
 
     private bool CanUpgradeTerrainOnTile(TileContainer tile, TerrainUpgradeEntity entity)
     {
-        return tile.building == null && entity.Target.Entity == tile.terrain;
+        return tile.specialEntity == null && tile.building == null && entity.Target.Entity == tile.terrain;
     }
 
     public bool CanAfford(UpgradeEntity upgrade)

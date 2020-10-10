@@ -675,7 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b2c97a6892e408c9c167b2ac7f89ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileOutline: {fileID: 0}
+  tileOutline: {fileID: 11400000, guid: 1b81de7be4bbc87478bdff2219674ba8, type: 2}
   template: {fileID: 11400000, guid: 131375a8c9f944732a55b9d65cb93489, type: 2}
 --- !u!114 &487902314
 MonoBehaviour:
