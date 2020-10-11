@@ -53,7 +53,10 @@
     id: farm_frequency
     ticks: 10
     variance: 0
-  unlockRule: {}
+  unlockRule:
+    requiredResources:
+      - resource: wheat
+        amount: 100
   buildRule:
     possibleTerrains: null
     previousBuilding: farmer_old

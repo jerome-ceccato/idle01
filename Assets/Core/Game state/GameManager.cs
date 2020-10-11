@@ -22,7 +22,7 @@ public sealed class GameManager
         DataStore store = DataStore.Shared;
 
         state.world = InitialData.InitialWorld(store);
-        state.AddResource(store.Get<ResourceEntity>("wheat"), 200);
+        //state.AddResource(store.Get<ResourceEntity>("wheat"), 200);
     }
 
     public void Tick() 
@@ -45,8 +45,9 @@ public sealed class GameManager
                     }
                 }
             }
-            
         }
+
+        ProcessUnlocks();
     }
 
     private void TickBuilding(TileContainer tile)
@@ -62,6 +63,33 @@ public sealed class GameManager
                 CollectGrowable(tile.growable);
             }
             
+        }
+    }
+
+    private void ProcessUnlocks()
+    {
+        foreach (UpgradeEntity upgrade in new List<UpgradeEntity>(state.otherUpgrades))
+        {
+            if (state.CanUnlock(upgrade.UnlockRule))
+            {
+                state.Unlock(upgrade);
+            }
+        }
+
+        foreach (BuildingEntity building in new List<BuildingEntity>(state.otherBuildings))
+        {
+            if (state.CanUnlock(building.UnlockRule))
+            {
+                state.Unlock(building);
+            }
+        }
+
+        foreach (TerrainUpgradeEntity upgrade in new List<TerrainUpgradeEntity>(state.otherTerrainUpgrades))
+        {
+            if (state.CanUnlock(upgrade.UnlockRule))
+            {
+                state.Unlock(upgrade);
+            }
         }
     }
 

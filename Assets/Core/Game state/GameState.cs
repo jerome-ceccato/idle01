@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Linq;
 using UnityEngine;
 
 public sealed class GameState
@@ -31,21 +32,26 @@ public sealed class GameState
         resources = new Dictionary<ResourceEntity, BigInteger>();
         world = new Dictionary<Vector2Int, TileContainer>();
 
-        unlockedBuildings = new List<BuildingEntity>(DataStore.Shared.Buildings);
-        otherBuildings = new List<BuildingEntity>();
+        unlockedBuildings = new List<BuildingEntity>();
+        otherBuildings = new List<BuildingEntity>(DataStore.Shared.Buildings);
 
         ownedUpgrades = new List<UpgradeEntity>();
-        unlockedUpgrades = new List<UpgradeEntity>(DataStore.Shared.Upgrades);
-        otherUpgrades = new List<UpgradeEntity>();
+        unlockedUpgrades = new List<UpgradeEntity>();
+        otherUpgrades = new List<UpgradeEntity>(DataStore.Shared.Upgrades);
 
-        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>(DataStore.Shared.TerrainUpgrades);
-        otherTerrainUpgrades = new List<TerrainUpgradeEntity>();
+        unlockedTerrainUpgrades = new List<TerrainUpgradeEntity>();
+        otherTerrainUpgrades = new List<TerrainUpgradeEntity>(DataStore.Shared.TerrainUpgrades);
     }
 
     public void AddResource(ResourceEntity resource, BigInteger amount)
     {
         BigInteger owned = resources.ContainsKey(resource) ? resources[resource] : new BigInteger(0);
         resources[resource] = BigInteger.Add(owned, amount);
+    }
+
+    private bool HasResource(ResourceEntity resource, BigInteger minimumAmount)
+    {
+        return resources.ContainsKey(resource) && resources[resource] >= minimumAmount;
     }
 
     public bool CanAfford(ResolvedGenerator generator)
@@ -57,6 +63,7 @@ public sealed class GameState
     {
         return CanAfford(ResolvedGenerator.List(building.BuildCost.Resources, multipliers));
     }
+
     public bool CanAfford(TerrainUpgradeEntity terrainUpgrade, ResolvedMultipliers multipliers)
     {
         return CanAfford(ResolvedGenerator.List(terrainUpgrade.BuildCost.Resources, multipliers));
@@ -159,6 +166,24 @@ public sealed class GameState
         return true;
     }
 
+    public void Unlock(UpgradeEntity upgrade)
+    {
+        otherUpgrades.Remove(upgrade);
+        unlockedUpgrades.Add(upgrade);
+    }
+
+    public void Unlock(BuildingEntity building)
+    {
+        otherBuildings.Remove(building);
+        unlockedBuildings.Add(building);
+    }
+
+    public void Unlock(TerrainUpgradeEntity upgrade)
+    {
+        otherTerrainUpgrades.Remove(upgrade);
+        unlockedTerrainUpgrades.Add(upgrade);
+    }
+
     public bool HasAdjacentTile(Vector2Int tilePosition)
     {
         foreach (Vector2Int offset in adjacentTileOffsets)
@@ -169,5 +194,46 @@ public sealed class GameState
             }
         }
         return false;
+    }
+
+    public bool CanUnlock(UnlockRule rule)
+    {
+        if (rule == null)
+        {
+            return true;
+        }
+
+        if (rule.RequiredResources != null)
+        {
+            foreach (MinimumResourceRequirement requirement in rule.RequiredResources)
+            {
+                if (!HasResource(requirement.Resource.Entity, requirement.Amount))
+                {
+                    return false;
+                }
+            }
+        }
+        if (rule.RequiredUpgrades != null)
+        {
+            foreach (LazyEntity<UpgradeEntity> entity in rule.RequiredUpgrades)
+            {
+                if (!ownedUpgrades.Contains(entity.Entity))
+                {
+                    return false;
+                }
+            }
+        }
+        if (rule.RequiredBuildings != null)
+        {
+            foreach (LazyEntity<BuildingEntity> entity in rule.RequiredBuildings)
+            {
+                if (!world.Values.Any(tile => tile.building?.Entity == entity.Entity))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
