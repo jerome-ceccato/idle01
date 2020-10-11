@@ -85,9 +85,19 @@ public sealed class GameManager
     {
         state.TryBuild(building, resolvedMultipliers, tileContainer);
     }
+
     public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
     {
         state.TryBuild(terrainUpgrade, resolvedMultipliers, tileContainer);
+    }
+
+    public void DestroyBuilding(TileContainer tile)
+    {
+        tile.building = null;
+        if (tile.terrain.Growable != null)
+        {
+            tile.growable = new GrowableIncarnation(tile.terrain.Growable.Entity);
+        }
     }
 
     public TileContainer TileContainerAtPosition(Vector2Int position)
