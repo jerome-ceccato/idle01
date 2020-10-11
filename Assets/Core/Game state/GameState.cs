@@ -48,15 +48,28 @@ public sealed class GameState
         resources[resource] = BigInteger.Add(owned, amount);
     }
 
-    public bool CanAfford(Generator generator)
+    public bool CanAfford(ResolvedGenerator generator)
     {
-        return resources.ContainsKey(generator.Resource.Entity) && resources[generator.Resource.Entity] >= generator.Amount;
+        return resources.ContainsKey(generator.Resource) && resources[generator.Resource] >= generator.Amount;
     }
 
-    public bool CanAfford(BaseCost cost)
+    public bool CanAfford(BuildingEntity building, ResolvedMultipliers multipliers)
     {
-        // TODO: Missing multipliers
-        foreach (Generator item in cost.Resources)
+        return CanAfford(ResolvedGenerator.List(building.BuildCost.Resources, multipliers));
+    }
+    public bool CanAfford(TerrainUpgradeEntity terrainUpgrade, ResolvedMultipliers multipliers)
+    {
+        return CanAfford(ResolvedGenerator.List(terrainUpgrade.BuildCost.Resources, multipliers));
+    }
+
+    public bool CanAfford(UpgradeEntity upgrade, ResolvedMultipliers multipliers)
+    {
+        return CanAfford(ResolvedGenerator.List(upgrade.BuyCost.Resources, multipliers));
+    }
+
+    public bool CanAfford(List<ResolvedGenerator> cost)
+    {
+        foreach (ResolvedGenerator item in cost)
         {
             if (!CanAfford(item))
             {
@@ -66,60 +79,82 @@ public sealed class GameState
         return true;
     }
 
-    private void Buy(BaseCost cost)
+    private void Buy(List<ResolvedGenerator> cost)
     {
-        // TODO: Missing multipliers
-        foreach (Generator item in cost.Resources)
+        foreach (ResolvedGenerator item in cost)
         {
-            resources[item.Resource.Entity] -= item.Amount;
+            resources[item.Resource] -= item.Amount;
         }
     }
 
-    public void UnlockUpgrade(UpgradeEntity upgrade)
+    public bool TryUnlockUpgrade(UpgradeEntity upgrade, ResolvedMultipliers multipliers)
     {
-        Buy(upgrade.BuyCost);
+        List<ResolvedGenerator> cost = ResolvedGenerator.List(upgrade.BuyCost.Resources, multipliers);
+
+        if (!CanAfford(cost))
+        {
+            return false;
+        }
+        Buy(cost);
 
         unlockedUpgrades.Remove(upgrade);
         ownedUpgrades.Add(upgrade);
+        return true;
     }
 
-    public void Build(BuildingEntity building, TileContainer tileContainer)
+    public bool TryBuild(BuildingEntity building, ResolvedMultipliers multipliers, TileContainer tileContainer)
     {
-        Buy(building.BuildCost);
+        List<ResolvedGenerator> cost = ResolvedGenerator.List(building.BuildCost.Resources, multipliers);
+
+        if (!CanAfford(cost))
+        {
+            return false;
+        }
+        Buy(cost);
 
         tileContainer.building = new BuildingIncarnation(building);
         if (!(building.Effect is BuildingEffectHarvester))
         {
             tileContainer.growable = null;
         }
+        return true;
     }
 
-    public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
+    public bool TryBuild(TerrainUpgradeEntity terrainUpgrade, ResolvedMultipliers multipliers, TileContainer tileContainer)
     {
-        Buy(terrainUpgrade.BuildCost);
+        List<ResolvedGenerator> cost = ResolvedGenerator.List(terrainUpgrade.BuildCost.Resources, multipliers);
+
+        if (!CanAfford(cost))
+        {
+            return false;
+        }
+        Buy(cost);
 
         tileContainer.terrain = terrainUpgrade.Replacement.Entity;
         tileContainer.growable = terrainUpgrade.Replacement.Entity.Growable != null ? new GrowableIncarnation(terrainUpgrade.Replacement.Entity.Growable.Entity) : null;
+        return true;
     }
 
-    public bool Generate(BuildingEffectGenerator building)
+    public bool TryGenerate(BuildingEffectGenerator building, ResolvedMultipliers multipliers)
     {
-        // TODO: Missing multipliers
-        foreach (Generator costs in building.Consumed)
+        List<ResolvedGenerator> consumed = ResolvedGenerator.List(building.Consumed, multipliers);
+        List<ResolvedGenerator> generated = ResolvedGenerator.List(building.Generated, multipliers);
+
+        foreach (ResolvedGenerator cost in consumed)
         {
-            if (!CanAfford(costs))
+            if (!CanAfford(cost))
             {
                 return false;
             }
         }
 
-        foreach (Generator costs in building.Consumed)
+        foreach (ResolvedGenerator cost in consumed)
         {
-            AddResource(costs.Resource.Entity, -costs.Amount);
+            AddResource(cost.Resource, -cost.Amount);
         }
-        foreach (Generator generated in building.Generated)
+        foreach (ResolvedGenerator cost in generated)
         {
-            AddResource(generated.Resource.Entity, generated.Amount);
+            AddResource(cost.Resource, cost.Amount);
         }
         return true;
     }

@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
 
 // An object that can alter a number depending on a set of rules
 public interface IMultiplier
@@ -23,31 +25,26 @@ public class MultiplierBaseValue : IMultiplier
         return input + Value;
     }
 }
-
-/*
-public class Multiplier2
+public class CombinedMultiplier: IMultiplier
 {
     private static int precision = 1024;
 
     private BigInteger baseGrowth;
     private double baseMultiplier;
     private double totalMultiplier;
-
-    private Multiplier(BigInteger baseGrowth, double baseMultiplier, double totalMultiplier)
+    public CombinedMultiplier(IEnumerable<IMultiplier> multipliers)
     {
-        this.baseGrowth = baseGrowth;
-        this.baseMultiplier = baseMultiplier;
-        this.totalMultiplier = totalMultiplier;
-    }
-
-    public static Multiplier Identity()
-    {
-        return new Multiplier(new BigInteger(0), 1, 1);
-    }
-
-    public static Multiplier AddingBaseValue(BigInteger value)
-    {
-        return new Multiplier(value, 1, 1);
+        baseGrowth = 0;
+        baseMultiplier = 1;
+        totalMultiplier = 1;
+        
+        foreach (IMultiplier multiplier in multipliers)
+        {
+            if (multiplier is MultiplierBaseValue baseValueMultiplier)
+            {
+                baseGrowth += baseValueMultiplier.Value;
+            }
+        }
     }
 
     public BigInteger Apply(BigInteger input)
@@ -58,4 +55,3 @@ public class Multiplier2
         return BigInteger.Divide(BigInteger.Multiply(BigInteger.Add(input, baseGrowth), truncatedGrowth), precision);
     }
 }
-*/

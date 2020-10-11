@@ -21,16 +21,15 @@ public abstract class Entity : IIdentifiable, IDisplayable
 
     public override bool Equals(object obj)
     {
-        if (!(obj is IIdentifiable item))
+        if (obj is IIdentifiable identifiable)
         {
-            return false;
+            return Id.Equals(identifiable.Id);
         }
-
-        return this.Id.Equals(item.Id);
+        return false;
     }
 
     public override int GetHashCode()
     {
-        return this.Id.GetHashCode();
+        return Id.GetHashCode();
     }
 }

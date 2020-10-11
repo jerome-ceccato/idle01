@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameRules
 {
@@ -10,17 +10,30 @@ public class GameRules
     {
         this.gameState = gameState;
     }
-
-    // TODO: improve
-    public IMultiplier MultiplierForGrowable(GrowableIncarnation growable)
+    private List<IMultiplier> ActiveMultipliersForIdentifiable(IIdentifiable entity)
     {
-        foreach (UpgradeEntity upgrade in gameState.ownedUpgrades)
+        // TODO: not just upgrades?
+        // TODO: cache/optimize
+        IEnumerable<UpgradeEntity> activeUpgrades = gameState.ownedUpgrades.FindAll(upgrade => upgrade.Effect.Target.Id == entity.Id);
+        IEnumerable<IMultiplier> multipliers = activeUpgrades.Select(upgrade => upgrade.Effect.Multiplier);
+
+        return new List<IMultiplier>(multipliers);
+    }
+
+    public IMultiplier ActiveFinalMultiplierForIdentifiable(IIdentifiable entity)
+    {
+        List<IMultiplier> multipliers = ActiveMultipliersForIdentifiable(entity);
+        if (multipliers.Count == 0)
         {
-            if (upgrade.Effect.Target.Entity == growable.Entity)
-            {
-                return upgrade.Effect.Multiplier;
-            }
+            return new MultiplierIdentity();
         }
-        return new MultiplierIdentity();
+        else if (multipliers.Count == 1)
+        {
+            return multipliers[0];
+        }
+        else
+        {
+            return new CombinedMultiplier(multipliers);
+        }
     }
 }

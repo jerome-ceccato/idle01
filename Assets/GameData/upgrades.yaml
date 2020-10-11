@@ -11,3 +11,31 @@
     multiplier: !MultiplierBaseValue
       value: 1
   unlockRule: {}
+
+- id: fertilizer2
+  name: Better fertilizer
+  flavorText: It smells even worse but it makes wheat grow faster
+  buyCost:
+    resources:
+      - id: fertilizer2_cost_wheat
+        resource: wheat
+        amount: 80
+  effect:
+    target: wheatGrowable
+    multiplier: !MultiplierBaseValue
+      value: 1
+  unlockRule: {}
+
+- id: farming1
+  name: Farming technique
+  flavorText: I'm not very creative right now
+  buyCost:
+    resources:
+      - id: farming1_cost_wheat
+        resource: wheat
+        amount: 250
+  effect:
+    target: farm_gen_wheat
+    multiplier: !MultiplierBaseValue
+      value: 1
+  unlockRule: {}

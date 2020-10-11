@@ -20,7 +20,9 @@ public class InitialData
                 {
                     List<Vector2Int> grassPosition = new List<Vector2Int>
                     {
+                        new Vector2Int(0, 0),
                         new Vector2Int(1, 0),
+                        new Vector2Int(2, 0),
                     };
                     TerrainEntity terrain = store.Get<TerrainEntity>(grassPosition.Contains(position) ? "grassTile" : "dirtTile");
                     BuildingIncarnation building = null;

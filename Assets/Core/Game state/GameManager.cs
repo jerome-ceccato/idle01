@@ -7,6 +7,8 @@ public sealed class GameManager
     private GameState state;
     private GameRules rules;
 
+    private ResolvedMultipliers resolvedMultipliers;
+
     // Lifecycle
 
     private GameManager()
@@ -20,11 +22,12 @@ public sealed class GameManager
         DataStore store = DataStore.Shared;
 
         state.world = InitialData.InitialWorld(store);
-        state.AddResource(store.Get<ResourceEntity>("wheat"), 1000);
+        state.AddResource(store.Get<ResourceEntity>("wheat"), 200);
     }
 
     public void Tick() 
     {
+        resolvedMultipliers = new ResolvedMultipliers(rules);
         // TODO: improve
         foreach (TileContainer tile in state.world.Values)
         {
@@ -50,7 +53,7 @@ public sealed class GameManager
     {
         if (tile.building.Entity.Effect is BuildingEffectGenerator generator)
         {
-            state.Generate(generator);
+            state.TryGenerate(generator, resolvedMultipliers);
         }
         else if (tile.building.Entity.Effect is BuildingEffectHarvester)
         {
@@ -66,7 +69,7 @@ public sealed class GameManager
     {
         if (growable.CanCollect())
         {
-            IMultiplier multiplier = rules.MultiplierForGrowable(growable);
+            IMultiplier multiplier = rules.ActiveFinalMultiplierForIdentifiable(growable.Entity);
             BigInteger amount = multiplier.Apply(growable.Entity.GrownResource.Amount);
             state.AddResource(growable.Entity.GrownResource.Resource.Entity, amount);
             growable.Reset();
@@ -75,25 +78,16 @@ public sealed class GameManager
 
     public void BuyUpgrade(UpgradeEntity upgrade)
     {
-        if (state.CanAfford(upgrade.BuyCost))
-        {
-            state.UnlockUpgrade(upgrade);
-        }
+        state.TryUnlockUpgrade(upgrade, resolvedMultipliers);
     }
 
     public void Build(BuildingEntity building, TileContainer tileContainer)
     {
-        if (state.CanAfford(building.BuildCost))
-        {
-            state.Build(building, tileContainer);
-        }
+        state.TryBuild(building, resolvedMultipliers, tileContainer);
     }
     public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
     {
-        if (state.CanAfford(terrainUpgrade.BuildCost))
-        {
-            state.Build(terrainUpgrade, tileContainer);
-        }
+        state.TryBuild(terrainUpgrade, resolvedMultipliers, tileContainer);
     }
 
     public TileContainer TileContainerAtPosition(Vector2Int position)
@@ -177,17 +171,17 @@ public sealed class GameManager
 
     public bool CanAfford(UpgradeEntity upgrade)
     {
-        return state.CanAfford(upgrade.BuyCost);
+        return state.CanAfford(upgrade, resolvedMultipliers);
     }
 
     public bool CanAfford(BuildingEntity building)
     {
-        return state.CanAfford(building.BuildCost);
+        return state.CanAfford(building, resolvedMultipliers);
     }
 
     public bool CanAfford(TerrainUpgradeEntity terrainUpgrade)
     {
-        return state.CanAfford(terrainUpgrade.BuildCost);
+        return state.CanAfford(terrainUpgrade, resolvedMultipliers);
     }
 
     public bool CanPurchaseTileAtPosition(Vector2Int position)
