@@ -22,7 +22,7 @@ public sealed class GameManager
         DataStore store = DataStore.Shared;
 
         state.world = InitialData.InitialWorld(store);
-        //state.AddResource(store.Get<ResourceEntity>("wheat"), 200);
+        state.AddResource(store.Get<ResourceEntity>("wheat"), 2000);
     }
 
     public void Tick() 

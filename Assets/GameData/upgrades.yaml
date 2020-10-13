@@ -6,7 +6,7 @@
       - id: fertilizer1_cost_wheat
         resource: wheat
         amount: 5
-  effect:
+  effect: !UpgradeEffectMultiplier
     target: wheatGrowable
     multiplier: !MultiplierBaseValue
       value: 1
@@ -20,7 +20,7 @@
       - id: fertilizer2_cost_wheat
         resource: wheat
         amount: 80
-  effect:
+  effect: !UpgradeEffectMultiplier
     target: wheatGrowable
     multiplier: !MultiplierBaseValue
       value: 1
@@ -36,10 +36,23 @@
       - id: farming1_cost_wheat
         resource: wheat
         amount: 250
-  effect:
+  effect: !UpgradeEffectMultiplier
     target: farm_gen_wheat
     multiplier: !MultiplierBaseValue
       value: 1
   unlockRule:
     requiredBuildings:
       - farm
+
+- id: grinding
+  name: Grinding wheat
+  flavorText: Grinding wheat sounds like a good idea for some reason
+  buyCost:
+    resources:
+      - id: grinding_cost_wheat
+        resource: wheat
+        amount: 300
+  effect: !UpgradeEffectNone
+  unlockRule:
+    requiredUpgrades:
+      - farming1

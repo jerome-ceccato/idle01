@@ -14,8 +14,14 @@ public class GameRules
     {
         // TODO: not just upgrades?
         // TODO: cache/optimize
-        IEnumerable<UpgradeEntity> activeUpgrades = gameState.ownedUpgrades.FindAll(upgrade => upgrade.Effect.Target.Id == entity.Id);
-        IEnumerable<IMultiplier> multipliers = activeUpgrades.Select(upgrade => upgrade.Effect.Multiplier);
+        IEnumerable<UpgradeEntity> activeUpgrades = gameState.ownedUpgrades.FindAll(upgrade => {
+            if (upgrade.Effect is UpgradeEffectMultiplier multiplier)
+            {
+                return multiplier.Target.Id == entity.Id;
+            }
+            return false;
+        });
+        IEnumerable<IMultiplier> multipliers = activeUpgrades.Select(upgrade => ((UpgradeEffectMultiplier)upgrade.Effect).Multiplier);
 
         return new List<IMultiplier>(multipliers);
     }

@@ -16,6 +16,8 @@ public class DataLoader
             .WithTagMapping("!BuildingEffectHarvester", typeof(BuildingEffectHarvester))
             .WithTagMapping("!BuildingEffectGenerator", typeof(BuildingEffectGenerator))
             .WithTagMapping("!UnlockRule", typeof(UnlockRule))
+            .WithTagMapping("!UpgradeEffectMultiplier", typeof(UpgradeEffectMultiplier))
+            .WithTagMapping("!UpgradeEffectNone", typeof(UpgradeEffectNone))
             .Build();
     }
 
