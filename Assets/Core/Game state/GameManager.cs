@@ -22,7 +22,7 @@ public sealed class GameManager
         DataStore store = DataStore.Shared;
 
         state.world = InitialData.InitialWorld(store);
-        state.AddResource(store.Get<ResourceEntity>("wheat"), 2000);
+        state.resources = InitialData.InitialResources(store);
     }
 
     public void Tick() 
@@ -47,6 +47,7 @@ public sealed class GameManager
             }
         }
 
+        TickMarket(DataStore.Shared.Home);
         ProcessUnlocks();
     }
 
@@ -63,6 +64,15 @@ public sealed class GameManager
                 CollectGrowable(tile.growable);
             }
             
+        }
+    }
+
+    private void TickMarket(HomeSpecialEntity home)
+    {
+        List<MarketEntry> marketEntries = home.ActiveMarketEntries();
+        foreach (MarketEntry entry in marketEntries)
+        {
+            state.TryTrade(entry);
         }
     }
 
@@ -225,6 +235,11 @@ public sealed class GameManager
     public bool CanPurchaseTileAtPosition(Vector2Int position)
     {
         return !state.world.ContainsKey(position) && state.HasAdjacentTile(position);
+    }
+
+    public HomeSpecialEntity GetHomeEntity()
+    {
+        return DataStore.Shared.Home;
     }
 
     // Singleton boilerplate

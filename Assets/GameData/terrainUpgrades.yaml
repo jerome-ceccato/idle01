@@ -3,8 +3,8 @@
   flavorText: Transform dirt to grass
   buildCost:
     resources:
-      - id: dirtToGrass_cost_wheat
-        resource: wheat
+      - id: dirtToGrass_cost
+        resource: money
         amount: 20
   unlockRule:
   target: dirtTile
