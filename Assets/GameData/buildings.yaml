@@ -3,8 +3,8 @@
   flavorText: Just a farmer trying to earn his bread. He collects wheat, sometimes
   buildCost:
     resources:
-      - id: farmer_cost_wheat
-        resource: wheat
+      - id: farmer_cost
+        resource: money
         amount: 10
   effect: !BuildingEffectHarvester {}
   effectFrequency:
@@ -21,8 +21,8 @@
   flavorText: An old farmer that knows how it's done. Faster than the youth
   buildCost:
     resources:
-      - id: farmer2_cost_wheat
-        resource: wheat
+      - id: farmer2_cost
+        resource: money
         amount: 20
   effect: !BuildingEffectHarvester {}
   effectFrequency:
@@ -38,8 +38,8 @@
   flavorText: A small wheat farm
   buildCost:
     resources:
-      - id: farm_cost_wheat
-        resource: wheat
+      - id: farm_cost
+        resource: money
         amount: 100
   effect: !BuildingEffectGenerator
     generated:
@@ -53,7 +53,7 @@
     variance: 0
   unlockRule:
     requiredResources:
-      - resource: wheat
+      - resource: money
         amount: 100
   buildRule:
     previousBuilding: farmer_old
@@ -63,14 +63,14 @@
   flavorText: A basic windmill
   buildCost:
     resources:
-      - id: windmill_cost_wheat
-        resource: wheat
+      - id: windmill_cost
+        resource: money
         amount: 300
   effect: !BuildingEffectGenerator
     consumed:
       - id: windmill_cons_wheat
         resource: wheat
-        amount: 10
+        amount: 5
     generated:
       - id: windmill_gen_flour
         resource: flour

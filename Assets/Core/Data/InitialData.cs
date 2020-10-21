@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class InitialData
@@ -34,5 +35,13 @@ public class InitialData
         }
 
         return world;
+    }
+
+    public static Dictionary<ResourceEntity, BigInteger> InitialResources(DataStore store)
+    {
+        return new Dictionary<ResourceEntity, BigInteger>
+        {
+            { store.Get<ResourceEntity>("money"), 0 },
+        };
     }
 }

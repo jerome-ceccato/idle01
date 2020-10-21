@@ -3,7 +3,7 @@
   flavorText: It smells but it makes wheat grow faster
   buyCost:
     resources:
-      - id: fertilizer1_cost_wheat
+      - id: fertilizer1_cost
         resource: wheat
         amount: 5
   effect: !UpgradeEffectMultiplier
@@ -17,8 +17,8 @@
   flavorText: It smells even worse but it makes wheat grow faster
   buyCost:
     resources:
-      - id: fertilizer2_cost_wheat
-        resource: wheat
+      - id: fertilizer2_cost
+        resource: money
         amount: 80
   effect: !UpgradeEffectMultiplier
     target: wheatGrowable
@@ -33,8 +33,8 @@
   flavorText: I'm not very creative right now
   buyCost:
     resources:
-      - id: farming1_cost_wheat
-        resource: wheat
+      - id: farming1_cost
+        resource: money
         amount: 250
   effect: !UpgradeEffectMultiplier
     target: farm_gen_wheat
@@ -49,8 +49,8 @@
   flavorText: Grinding wheat sounds like a good idea for some reason
   buyCost:
     resources:
-      - id: grinding_cost_wheat
-        resource: wheat
+      - id: grinding_cost
+        resource: money
         amount: 300
   effect: !UpgradeEffectNone
   unlockRule:
