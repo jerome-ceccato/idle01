@@ -111,12 +111,20 @@ public sealed class GameManager
 
     public bool Build(BuildingEntity building, TileContainer tileContainer)
     {
-        return state.TryBuild(building, resolvedMultipliers, tileContainer);
+        if (CanBuildOnTile(tileContainer, building))
+        {
+            return state.TryBuild(building, resolvedMultipliers, tileContainer);
+        }
+        return false;
     }
 
     public bool Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
     {
-        return state.TryBuild(terrainUpgrade, resolvedMultipliers, tileContainer);
+        if (CanUpgradeTerrainOnTile(tileContainer, terrainUpgrade))
+        {
+            return state.TryBuild(terrainUpgrade, resolvedMultipliers, tileContainer);
+        }
+        return false;
     }
 
     public void DestroyBuilding(TileContainer tile)

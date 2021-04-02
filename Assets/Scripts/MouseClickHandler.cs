@@ -39,7 +39,6 @@ public class MouseClickHandler : MonoBehaviour
             {
                 UIManager.Instance.State = UIState.Default();
             }    
-
         }
     }
 }
