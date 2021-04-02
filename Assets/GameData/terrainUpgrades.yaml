@@ -4,7 +4,7 @@
   buildCost:
     resources:
       - id: dirtToGrass_cost
-        resource: money
+        resource: wheat
         amount: 20
   unlockRule:
   target: dirtTile

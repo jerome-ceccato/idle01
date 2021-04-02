@@ -18,7 +18,7 @@
   buyCost:
     resources:
       - id: fertilizer2_cost
-        resource: money
+        resource: wheat
         amount: 80
   effect: !UpgradeEffectMultiplier
     target: wheatGrowable
@@ -34,7 +34,7 @@
   buyCost:
     resources:
       - id: farming1_cost
-        resource: money
+        resource: wheat
         amount: 250
   effect: !UpgradeEffectMultiplier
     target: farm_gen_wheat
@@ -50,7 +50,7 @@
   buyCost:
     resources:
       - id: grinding_cost
-        resource: money
+        resource: wheat
         amount: 300
   effect: !UpgradeEffectNone
   unlockRule:

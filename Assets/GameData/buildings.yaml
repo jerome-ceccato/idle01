@@ -4,7 +4,7 @@
   buildCost:
     resources:
       - id: farmer_cost
-        resource: money
+        resource: wheat
         amount: 10
   effect: !BuildingEffectHarvester {}
   effectFrequency:
@@ -22,7 +22,7 @@
   buildCost:
     resources:
       - id: farmer2_cost
-        resource: money
+        resource: wheat
         amount: 20
   effect: !BuildingEffectHarvester {}
   effectFrequency:
@@ -39,7 +39,7 @@
   buildCost:
     resources:
       - id: farm_cost
-        resource: money
+        resource: wheat
         amount: 100
   effect: !BuildingEffectGenerator
     generated:
@@ -53,7 +53,7 @@
     variance: 0
   unlockRule:
     requiredResources:
-      - resource: money
+      - resource: wheat
         amount: 100
   buildRule:
     previousBuilding: farmer_old
@@ -64,7 +64,7 @@
   buildCost:
     resources:
       - id: windmill_cost
-        resource: money
+        resource: wheat
         amount: 300
   effect: !BuildingEffectGenerator
     consumed:
