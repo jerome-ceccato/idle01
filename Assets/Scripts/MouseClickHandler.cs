@@ -18,17 +18,22 @@ public class MouseClickHandler : MonoBehaviour
             TileContainer tileContainer = GameManager.Instance.TileContainerAtPosition(tileCoordinates);
             if (tileContainer != null)
             {
-                bool isAlreadySelected = UIManager.Instance.State.state == UIState.Value.TileSelected && UIManager.Instance.State.tilePosition == tileCoordinates;
-                if (!isAlreadySelected)
+                switch (UIManager.Instance.State.state)
                 {
-                    UIManager.Instance.State = UIState.TileSelected(tileContainer, tileCoordinates);
-                }
+                    case UIState.Value.BuildingSelected:
+                        GameManager.Instance.Build(UIManager.Instance.State.buildingEntity, tileContainer);
+                        break;
+                    case UIState.Value.TerrainUpgradeSelected:
+                        GameManager.Instance.Build(UIManager.Instance.State.terrainUpgradeEntity, tileContainer);
+                        break;
+                    case UIState.Value.Default:
+                        if (tileContainer.growable != null)
+                        {
+                            GameManager.Instance.CollectGrowable(tileContainer.growable);
+                        }
+                        break;
 
-                if (tileContainer.growable != null)
-                {
-                    GameManager.Instance.CollectGrowable(tileContainer.growable);
                 }
-
             }
             else
             {

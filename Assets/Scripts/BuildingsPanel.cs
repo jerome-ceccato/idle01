@@ -15,49 +15,41 @@ public class BuildingsPanel : MonoBehaviour
 
     void OnGUI()
     {
-        if (UIManager.Instance.State.state == UIState.Value.TileSelected)
+        List<BuildingEntity> buildings = GameManager.Instance.AvailableBuildings;
+        List<TerrainUpgradeEntity> terrainUpgrades = GameManager.Instance.AvailableTerrainUpgrades;
+
+        List<Entity> allEntities = new List<Entity>(buildings);
+        allEntities.AddRange(terrainUpgrades);
+
+        listBuilder.UpdateNumberOfEntries(allEntities.Count);
+        for (int i = 0; i < allEntities.Count; i++)
         {
-            TileContainer selectedTile = UIManager.Instance.State.tileContainer;
-            List<BuildingEntity> buildings = GameManager.Instance.AvailableBuildingsForTile(selectedTile);
-            List<TerrainUpgradeEntity> terrainUpgrades = GameManager.Instance.AvailableTerrainUpgradesForTile(selectedTile);
+            GameObject entry = listBuilder.Entries[i];
+            Text textField = entry.GetComponentInChildren<Text>();
+            Button button = entry.GetComponentInChildren<Button>();
 
-            List<Entity> allEntities = new List<Entity>(buildings);
-            allEntities.AddRange(terrainUpgrades);
+            button.onClick.RemoveAllListeners();
 
-            listBuilder.UpdateNumberOfEntries(allEntities.Count);
-            for (int i = 0; i < allEntities.Count; i++)
+            if (allEntities[i] is BuildingEntity building)
             {
-                GameObject entry = listBuilder.Entries[i];
-                Text textField = entry.GetComponentInChildren<Text>();
-                Button button = entry.GetComponentInChildren<Button>();
+                string costAsString = string.Join(", ", building.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
+                textField.text = $"{building.Name}: {costAsString}";
 
-                button.onClick.RemoveAllListeners();
+                bool canBuy = GameManager.Instance.CanAfford(building);
+                button.GetComponent<BuyButton>().SetEnabled(canBuy);
 
-                if (allEntities[i] is BuildingEntity building)
-                {
-                    string costAsString = string.Join(", ", building.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
-                    textField.text = $"{building.Name}: {costAsString}";
-
-                    bool canBuy = GameManager.Instance.CanAfford(building);
-                    button.GetComponent<BuyButton>().SetEnabled(canBuy);
-
-                    button.onClick.AddListener(() => GameManager.Instance.Build(building, selectedTile));
-                }
-                else if (allEntities[i] is TerrainUpgradeEntity terrainUpgrade)
-                {
-                    string costAsString = string.Join(", ", terrainUpgrade.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
-                    textField.text = $"{terrainUpgrade.Name}: {costAsString}";
-
-                    bool canBuy = GameManager.Instance.CanAfford(terrainUpgrade);
-                    button.GetComponent<BuyButton>().SetEnabled(canBuy);
-
-                    button.onClick.AddListener(() => GameManager.Instance.Build(terrainUpgrade, selectedTile));
-                }
+                button.onClick.AddListener(() => UIManager.Instance.State = UIState.BuildingSelected(building));
             }
-        }
-        else
-        {
-            listBuilder.UpdateNumberOfEntries(0);
+            else if (allEntities[i] is TerrainUpgradeEntity terrainUpgrade)
+            {
+                string costAsString = string.Join(", ", terrainUpgrade.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
+                textField.text = $"{terrainUpgrade.Name}: {costAsString}";
+
+                bool canBuy = GameManager.Instance.CanAfford(terrainUpgrade);
+                button.GetComponent<BuyButton>().SetEnabled(canBuy);
+
+                button.onClick.AddListener(() => UIManager.Instance.State = UIState.TerrainUpgradeSelected(terrainUpgrade));
+            }
         }
     }
 }

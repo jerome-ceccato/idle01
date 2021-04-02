@@ -6,29 +6,36 @@ public class UIState
     public enum Value
     {
         Default,
-        TileSelected
+        BuildingSelected,
+        TerrainUpgradeSelected
     }
 
     public readonly Value state;
 
-    // Only available in TileSelected
-    public readonly TileContainer tileContainer;
-    public readonly Vector2Int tilePosition;
+    // Only available in BuildingSelected
+    public readonly BuildingEntity buildingEntity;
+    // Only available in TerrainUpgradeSelected
+    public readonly TerrainUpgradeEntity terrainUpgradeEntity;
 
-    private UIState(Value v, TileContainer container, Vector2Int position)
+    private UIState(Value v, BuildingEntity buildingEntity, TerrainUpgradeEntity terrainUpgradeEntity)
     {
         state = v;
-        tileContainer = container;
-        tilePosition = position;
+        this.buildingEntity = buildingEntity;
+        this.terrainUpgradeEntity = terrainUpgradeEntity;
     }
 
     public static UIState Default()
     {
-        return new UIState(Value.Default, null, new Vector2Int());
+        return new UIState(Value.Default, null, null);
     }
 
-    public static UIState TileSelected(TileContainer container, Vector2Int tilePosition)
+    public static UIState BuildingSelected(BuildingEntity buildingEntity)
     {
-        return new UIState(Value.TileSelected, container, tilePosition);
+        return new UIState(Value.BuildingSelected, buildingEntity, null);
+    }
+
+    public static UIState TerrainUpgradeSelected(TerrainUpgradeEntity terrainUpgradeEntity)
+    {
+        return new UIState(Value.TerrainUpgradeSelected, null, terrainUpgradeEntity);
     }
 }

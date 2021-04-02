@@ -16,7 +16,7 @@ public class TileResources: MonoBehaviour
         if (!cache.ContainsKey(key))
         {
             Tile copy = Instantiate<Tile>(template);
-            copy.sprite = UnityEngine.Resources.Load<Sprite>(key);
+            copy.sprite = Resources.Load<Sprite>(key);
             cache.Add(key, copy);
         }
         return cache[key];

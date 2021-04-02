@@ -86,11 +86,6 @@ public sealed class GameState
         return true;
     }
 
-    public bool CanTrade(MarketEntry marketEntry)
-    {
-        return resources.ContainsKey(marketEntry.Resource.Entity) && resources[marketEntry.Resource.Entity] > 0;
-    }
-
     private void Buy(List<ResolvedGenerator> cost)
     {
         foreach (ResolvedGenerator item in cost)
@@ -168,18 +163,6 @@ public sealed class GameState
         {
             AddResource(cost.Resource, cost.Amount);
         }
-        return true;
-    }
-
-    public bool TryTrade(MarketEntry marketEntry)
-    {
-        if (!CanTrade(marketEntry))
-        {
-            return false;
-        }
-
-        resources[marketEntry.Resource.Entity] -= 1;
-        AddResource(DataStore.Shared.Get<ResourceEntity>("money"), marketEntry.Amount);
         return true;
     }
 

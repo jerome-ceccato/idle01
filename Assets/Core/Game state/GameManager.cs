@@ -47,7 +47,6 @@ public sealed class GameManager
             }
         }
 
-        TickMarket(DataStore.Shared.Home);
         ProcessUnlocks();
     }
 
@@ -64,15 +63,6 @@ public sealed class GameManager
                 CollectGrowable(tile.growable);
             }
             
-        }
-    }
-
-    private void TickMarket(HomeSpecialEntity home)
-    {
-        List<MarketEntry> marketEntries = home.ActiveMarketEntries();
-        foreach (MarketEntry entry in marketEntries)
-        {
-            state.TryTrade(entry);
         }
     }
 
@@ -119,14 +109,14 @@ public sealed class GameManager
         state.TryUnlockUpgrade(upgrade, resolvedMultipliers);
     }
 
-    public void Build(BuildingEntity building, TileContainer tileContainer)
+    public bool Build(BuildingEntity building, TileContainer tileContainer)
     {
-        state.TryBuild(building, resolvedMultipliers, tileContainer);
+        return state.TryBuild(building, resolvedMultipliers, tileContainer);
     }
 
-    public void Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
+    public bool Build(TerrainUpgradeEntity terrainUpgrade, TileContainer tileContainer)
     {
-        state.TryBuild(terrainUpgrade, resolvedMultipliers, tileContainer);
+        return state.TryBuild(terrainUpgrade, resolvedMultipliers, tileContainer);
     }
 
     public void DestroyBuilding(TileContainer tile)
@@ -180,6 +170,14 @@ public sealed class GameManager
         get
         {
             return state.unlockedBuildings;
+        }
+    }
+
+    public List<TerrainUpgradeEntity> AvailableTerrainUpgrades
+    {
+        get
+        {
+            return state.unlockedTerrainUpgrades;
         }
     }
 
