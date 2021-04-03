@@ -20,10 +20,22 @@ public class MouseClickHandler : MonoBehaviour
                 switch (UIManager.Instance.State.state)
                 {
                     case UIState.Value.BuildingSelected:
-                        GameManager.Instance.Build(UIManager.Instance.State.buildingEntity, tileContainer);
+                        if (GameManager.Instance.Build(UIManager.Instance.State.buildingEntity, tileContainer))
+                        {
+                            UIManager.Instance.State = UIState.Default();
+                        }
                         break;
                     case UIState.Value.TerrainUpgradeSelected:
-                        GameManager.Instance.Build(UIManager.Instance.State.terrainUpgradeEntity, tileContainer);
+                        if (GameManager.Instance.Build(UIManager.Instance.State.terrainUpgradeEntity, tileContainer))
+                        {
+                            UIManager.Instance.State = UIState.Default();
+                        }
+                        break;
+                    case UIState.Value.DestoryBuildings:
+                        if (GameManager.Instance.DestroyBuilding(tileContainer))
+                        {
+                            UIManager.Instance.State = UIState.Default();
+                        }
                         break;
                     case UIState.Value.Default:
                         if (tileContainer.growable != null)
@@ -31,7 +43,6 @@ public class MouseClickHandler : MonoBehaviour
                             GameManager.Instance.CollectGrowable(tileContainer.growable);
                         }
                         break;
-
                 }
             }
             else

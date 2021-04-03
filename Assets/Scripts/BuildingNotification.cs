@@ -24,6 +24,10 @@ public class BuildingNotification : MonoBehaviour
                 buildingName.text = $"Click to upgrade to {state.terrainUpgradeEntity.Name}";
                 cost.text = $"Costs {CostAsString(state.terrainUpgradeEntity.BuildCost)}";
                 break;
+            case UIState.Value.DestoryBuildings:
+                buildingName.text = "Click to destroy buildings";
+                cost.text = "";
+                break;
         }
     }
 

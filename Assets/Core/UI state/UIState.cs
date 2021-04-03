@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿
 public class UIState
 {
     public enum Value
     {
         Default,
         BuildingSelected,
-        TerrainUpgradeSelected
+        TerrainUpgradeSelected,
+        DestoryBuildings
     }
 
     public readonly Value state;
@@ -37,5 +36,10 @@ public class UIState
     public static UIState TerrainUpgradeSelected(TerrainUpgradeEntity terrainUpgradeEntity)
     {
         return new UIState(Value.TerrainUpgradeSelected, null, terrainUpgradeEntity);
+    }
+
+    public static UIState DestoryBuildings()
+    {
+        return new UIState(Value.DestoryBuildings, null, null);
     }
 }

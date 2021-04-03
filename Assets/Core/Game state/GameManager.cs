@@ -127,13 +127,18 @@ public sealed class GameManager
         return false;
     }
 
-    public void DestroyBuilding(TileContainer tile)
+    public bool DestroyBuilding(TileContainer tile)
     {
-        tile.building = null;
-        if (tile.terrain.Growable != null)
+        if (tile.building != null)
         {
-            tile.growable = new GrowableIncarnation(tile.terrain.Growable.Entity);
+            tile.building = null;
+            if (tile.terrain.Growable != null)
+            {
+                tile.growable = new GrowableIncarnation(tile.terrain.Growable.Entity);
+            }
+            return true;
         }
+        return false;
     }
 
     public TileContainer TileContainerAtPosition(Vector2Int position)

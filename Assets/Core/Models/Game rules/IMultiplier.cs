@@ -25,6 +25,7 @@ public class MultiplierBaseValue : IMultiplier
         return input + Value;
     }
 }
+
 public class CombinedMultiplier: IMultiplier
 {
     private static int precision = 1024;
