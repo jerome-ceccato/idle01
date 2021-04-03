@@ -77,7 +77,7 @@
         amount: 1
   effectFrequency:
     id: windmill_frequency
-    ticks: 1
+    ticks: 10
     variance: 0
   unlockRule:
     requiredUpgrades:

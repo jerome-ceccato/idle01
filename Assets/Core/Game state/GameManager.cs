@@ -199,7 +199,7 @@ public sealed class GameManager
         return state.unlockedTerrainUpgrades.FindAll(upgrade => CanUpgradeTerrainOnTile(tile, upgrade));
     }
 
-    private bool CanBuildOnTile(TileContainer tile, BuildingEntity entity)
+    public bool CanBuildOnTile(TileContainer tile, BuildingEntity entity)
     {
         if (tile.specialEntity != null)
         {
@@ -218,7 +218,7 @@ public sealed class GameManager
         return entity.BuildRule.PossibleTerrains == null || entity.BuildRule.PossibleTerrains.Contains(tile.terrain.Id);       
     }
 
-    private bool CanUpgradeTerrainOnTile(TileContainer tile, TerrainUpgradeEntity entity)
+    public bool CanUpgradeTerrainOnTile(TileContainer tile, TerrainUpgradeEntity entity)
     {
         return tile.specialEntity == null && tile.building == null && entity.Target.Entity == tile.terrain;
     }

@@ -14,6 +14,7 @@ public class BuildingNotification : MonoBehaviour
         {
             case UIState.Value.Default:
                 buildingName.text = "";
+                cost.text = "";
                 break;
             case UIState.Value.BuildingSelected:
                 buildingName.text = $"Click to build {state.buildingEntity.Name}";

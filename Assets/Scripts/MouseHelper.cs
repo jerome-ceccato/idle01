@@ -36,6 +36,11 @@ public class MouseHelper : MonoBehaviour
         return Input.GetMouseButtonDown(0) && !IsPointerOverUIElement();
     }
 
+    public bool DidRightClickOverGame()
+    {
+        return Input.GetMouseButtonDown(1) && !IsPointerOverUIElement();
+    }
+
     public bool DidClickOnUI()
     {
         return Input.GetMouseButtonDown(0) && IsPointerOverUIElement();

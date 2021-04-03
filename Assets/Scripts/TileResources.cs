@@ -15,8 +15,23 @@ public class TileResources: MonoBehaviour
 
         if (!cache.ContainsKey(key))
         {
-            Tile copy = Instantiate<Tile>(template);
+            Tile copy = Instantiate(template);
             copy.sprite = Resources.Load<Sprite>(key);
+            cache.Add(key, copy);
+        }
+        return cache[key];
+    }
+
+    public Tile ColoredTileForDisplayable(IDisplayable e, Color color)
+    {
+        string spriteKey = e.SpriteId;
+        string key = $"{spriteKey}-{color}";
+
+        if (!cache.ContainsKey(key))
+        {
+            Tile copy = Instantiate(template);
+            copy.sprite = Resources.Load<Sprite>(spriteKey);
+            copy.color = color;
             cache.Add(key, copy);
         }
         return cache[key];

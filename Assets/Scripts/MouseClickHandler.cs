@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class MouseClickHandler : MonoBehaviour
 {
@@ -39,6 +38,10 @@ public class MouseClickHandler : MonoBehaviour
             {
                 UIManager.Instance.State = UIState.Default();
             }    
+        }
+        else if (mouseHelper.DidRightClickOverGame())
+        {
+            UIManager.Instance.State = UIState.Default();
         }
     }
 }

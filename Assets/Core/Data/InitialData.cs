@@ -41,7 +41,7 @@ public class InitialData
     {
         return new Dictionary<ResourceEntity, BigInteger>
         {
-            { store.Get<ResourceEntity>("wheat"), 1000 },
+            { store.Get<ResourceEntity>("wheat"), 2000 },
         };
     }
 }

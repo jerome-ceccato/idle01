@@ -1223,6 +1223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 648380669}
   - component: {fileID: 648380671}
+  - component: {fileID: 648380670}
   m_Layer: 5
   m_Name: Bottom container
   m_TagString: Untagged
@@ -1250,6 +1251,19 @@ RectTransform:
   m_AnchoredPosition: {x: -250, y: 0}
   m_SizeDelta: {x: -500, y: 100}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &648380670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648380668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0286ccbacead45d6ae12684ca6a8be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingNotification: {fileID: 889122260}
 --- !u!222 &648380671
 CanvasRenderer:
   m_ObjectHideFlags: 0
