@@ -248,6 +248,15 @@ public sealed class GameManager
         return !state.world.ContainsKey(position) && state.HasAdjacentTile(position);
     }
 
+    public int AvailableTilesForBuilding(BuildingEntity building)
+    {
+        return new List<TileContainer>(state.world.Values).FindAll(tile => CanBuildOnTile(tile, building)).Count;
+    }
+    public int AvailableTilesForTerrainUpgrade(TerrainUpgradeEntity terrainUpgrade)
+    {
+        return new List<TileContainer>(state.world.Values).FindAll(tile => CanUpgradeTerrainOnTile(tile, terrainUpgrade)).Count;
+    }
+
     public HomeSpecialEntity GetHomeEntity()
     {
         return DataStore.Shared.Home;

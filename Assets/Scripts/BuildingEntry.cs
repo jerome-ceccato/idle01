@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BuildingEntry : MonoBehaviour
@@ -12,26 +13,41 @@ public class BuildingEntry : MonoBehaviour
 
     public void Configure(BuildingEntity building)
     {
-        nameLabel.text = building.Name;
-        costLabel.text = CostAsString(building.BuildCost);
-
-        bool canBuy = GameManager.Instance.CanAfford(building);
-        buyButton.GetComponent<BuyButton>().SetEnabled(canBuy);
-
-        buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(() => UIManager.Instance.State = UIState.BuildingSelected(building));
+        Configure(
+            building.Name,
+            building.BuildCost,
+            GameManager.Instance.CanAfford(building),
+            GameManager.Instance.AvailableTilesForBuilding(building),
+            () => UIManager.Instance.State = UIState.BuildingSelected(building)
+        );
     }
 
     public void Configure(TerrainUpgradeEntity terrainUpgrade)
     {
-        nameLabel.text = terrainUpgrade.Name;
-        costLabel.text = CostAsString(terrainUpgrade.BuildCost);
+        Configure(
+            terrainUpgrade.Name,
+            terrainUpgrade.BuildCost,
+            GameManager.Instance.CanAfford(terrainUpgrade),
+            GameManager.Instance.AvailableTilesForTerrainUpgrade(terrainUpgrade),
+            () => UIManager.Instance.State = UIState.TerrainUpgradeSelected(terrainUpgrade)
+        );
+    }
 
-        bool canBuy = GameManager.Instance.CanAfford(terrainUpgrade);
-        buyButton.GetComponent<BuyButton>().SetEnabled(canBuy);
+    private void Configure(
+        string name, 
+        BaseCost cost, 
+        bool canBuy,
+        int availableTiles,
+        UnityAction clickAction
+        )
+    {
+        nameLabel.text = name;
+        costLabel.text = CostAsString(cost);
+
+        buyButton.GetComponent<BuyButton>().SetEnabled(canBuy && availableTiles > 0);
 
         buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(() => UIManager.Instance.State = UIState.TerrainUpgradeSelected(terrainUpgrade));
+        buyButton.onClick.AddListener(clickAction);
     }
 
     private string CostAsString(BaseCost buildCost)
