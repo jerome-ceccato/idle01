@@ -25,30 +25,15 @@ public class BuildingsPanel : MonoBehaviour
         for (int i = 0; i < allEntities.Count; i++)
         {
             GameObject entry = listBuilder.Entries[i];
-            Text textField = entry.GetComponentInChildren<Text>();
-            Button button = entry.GetComponentInChildren<Button>();
-
-            button.onClick.RemoveAllListeners();
+            BuildingEntry buildingEntry = entry.GetComponent<BuildingEntry>();
 
             if (allEntities[i] is BuildingEntity building)
             {
-                string costAsString = string.Join(", ", building.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
-                textField.text = $"{building.Name}: {costAsString}";
-
-                bool canBuy = GameManager.Instance.CanAfford(building);
-                button.GetComponent<BuyButton>().SetEnabled(canBuy);
-
-                button.onClick.AddListener(() => UIManager.Instance.State = UIState.BuildingSelected(building));
+                buildingEntry.Configure(building);
             }
             else if (allEntities[i] is TerrainUpgradeEntity terrainUpgrade)
             {
-                string costAsString = string.Join(", ", terrainUpgrade.BuildCost.Resources.Select(r => $"{r.Amount} {r.Resource.Entity.Name}"));
-                textField.text = $"{terrainUpgrade.Name}: {costAsString}";
-
-                bool canBuy = GameManager.Instance.CanAfford(terrainUpgrade);
-                button.GetComponent<BuyButton>().SetEnabled(canBuy);
-
-                button.onClick.AddListener(() => UIManager.Instance.State = UIState.TerrainUpgradeSelected(terrainUpgrade));
+                buildingEntry.Configure(terrainUpgrade);
             }
         }
     }
